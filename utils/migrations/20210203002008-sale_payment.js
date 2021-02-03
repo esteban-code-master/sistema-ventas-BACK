@@ -2,8 +2,8 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('repayment',{
-      id : {
+    return queryInterface.createTable('sale_payment',{
+      id :{
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -16,28 +16,18 @@ module.exports = {
           key : 'id'
         }
       },
-      id_product : {
+      id_type : {
         type : Sequelize.DataTypes.INTEGER,
         allowNull:  false,
         references : {
-          model : 'product',
+          model : 'type_action',
           key : 'id'
         }
-      },
-      date : {
-        type : Sequelize.DataTypes.DATE,          
-        defaultValue: DataTypes.NOW,
-        allowNull:  true,
-      },
-      amount : {
-          type : Sequelize.DataTypes.DOUBLE,
-          allowNull:  true
-      },
-
+      }
     })
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('repayment')
+    return queryInterface.dropTable('sale_payment')
   }
 };

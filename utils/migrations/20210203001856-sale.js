@@ -10,10 +10,10 @@ module.exports = {
       },
       date : {
         type : Sequelize.DataTypes.DATE,          
-        defaultValue: DataTypes.NOW,
+        defaultValue: Sequelize.DataTypes.NOW,
         allowNull:  true,
       },
-      id_user : {
+      id_session : {
         type : Sequelize.DataTypes.INTEGER,
         allowNull:  false,
         references : {

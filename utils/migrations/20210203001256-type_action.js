@@ -1,8 +1,9 @@
 'use strict';
 
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('type_payment',{
+    return queryInterface.createTable('type_action',{ // para tipos de pagos y movimientos
       id : {
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
@@ -16,6 +17,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('type_payment')
+    return queryInterface.dropTable('type_action')
   }
 };

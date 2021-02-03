@@ -33,7 +33,7 @@ module.exports = {
           type : Sequelize.DataTypes.INTEGER,
           allowNull:  false,
           references : {
-            model : 'session',
+            model : 'user',
             key : 'id'
           }
         }     

@@ -10,7 +10,7 @@ module.exports = {
       },
       date: {
         type : Sequelize.DataTypes.DATE,          
-        defaultValue: DataTypes.NOW,
+        defaultValue: Sequelize.DataTypes.NOW,
         allowNull:  true,
       },
       quantity:{
@@ -29,7 +29,7 @@ module.exports = {
         type : Sequelize.DataTypes.INTEGER,
         allowNull:  false,
         references : {
-          model : 'session',
+          model : 'user',
           key : 'id'
         }
       },
@@ -37,7 +37,7 @@ module.exports = {
         type : Sequelize.DataTypes.INTEGER,
         allowNull:  false,
         references : {
-          model : 'type_movement',
+          model : 'type_action',
           key : 'id'
         }
       }
