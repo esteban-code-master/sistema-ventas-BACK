@@ -1,8 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const  categoryRouter  = require('../apiServices/category/router')
 
-const example = require('../apiServices/example/router')
+const groupRouter = (router) => {
+    categoryRouter(router)
+}
 
-router.use('/group',example)
-
-module.exports = router;
+module.exports = groupRouter
