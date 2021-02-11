@@ -1,11 +1,18 @@
-const {nuevoProducto} = require('./controller')
+const { 
+  nuevoProducto,
+  consultar,
+} = require('./controller')
 
 
 const ProductosRouter = (router) => {    
-    router.post('/crearProducto',function(req,res,next){
-            nuevoProducto(req,res,next)
+
+    router.post('/producto',(req,res,next) => {
+        nuevoProducto(req,res,next)
     })
 
+    router.get('/producto',(req,res,next) =>{
+        consultar(req,res,next)
+    })
 }
 
 

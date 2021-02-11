@@ -15,6 +15,20 @@ exports.InsertarProducto = async (db,data) => {
         .then((res)=>{
             resolve(res)            
         })
+        .catch((err)=>{            
+            reject(err)
+        })
+    })   
+}
+
+
+exports.getProductos = async (db) => {
+    return new Promise((resolve,reject)=>{
+        Products(db)
+        .findAll()    
+        .then((res)=>{
+            resolve(res)            
+        })
         .catch((err)=>{
             reject(err)
         })
