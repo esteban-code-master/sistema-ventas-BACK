@@ -17,10 +17,10 @@ exports.nuevoProducto = async (req,res,next) => {
     }
     catch(err){        
         // console.log(err.sqlMessage)
-        // next(boom.badData(err))
-        res.json({
-            err : boom.internal()
-        })
+         next(boom.internal(err))
+        // res.json({
+        //     err : boom.internal(err)
+        // })
     }
 }
 

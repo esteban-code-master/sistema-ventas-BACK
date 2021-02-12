@@ -25,7 +25,15 @@ exports.InsertarProducto = async (db,data) => {
 exports.getProductos = async (db) => {
     return new Promise((resolve,reject)=>{
         Products(db)
-        .findAll()    
+        .findAll({                    
+            include: [
+                {
+                  model : prod_category,                  
+                },
+            ],
+            raw: true,
+            nest: true
+        })    
         .then((res)=>{
             resolve(res)            
         })

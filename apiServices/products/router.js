@@ -13,6 +13,7 @@ const ProductosRouter = (router) => {
     router.get('/producto',(req,res,next) =>{
         consultar(req,res,next)
     })
+
 }
 
 
