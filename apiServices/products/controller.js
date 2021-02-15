@@ -7,7 +7,7 @@ exports.nuevoProducto = async (req,res,next) => {
     try {        
         const db = await seq.connection()
         const data = req.body;
-        if(data.code.lenght == 12){
+        if(data.code.length == 12){
             await InsertarProducto(db,data)   
             res.status(201).json({
                 status : res.statusCode,
