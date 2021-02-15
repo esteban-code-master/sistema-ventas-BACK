@@ -1,26 +1,28 @@
+const boom = require('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
 const {InsertarProducto,getProductos} = require('./service')
-const boom = require('@hapi/boom')
-
 const seq = new Sequelizelib()
 
 exports.nuevoProducto = async (req,res,next) => {
     try {        
         const db = await seq.connection()
         const data = req.body;
-        await InsertarProducto(db,data)   
-
-        res.status(201).json({
-            status : res.statusCode,
-            message: 'create new product'
-        })
+        if(data.code.lenght == 12){
+            await InsertarProducto(db,data)   
+            res.status(201).json({
+                status : res.statusCode,
+                message: 'create new product'
+            })
+        }
+        else {
+            res.status(422).json({
+                status : res.statusCode,
+                message: 'this code should be of twelve characther'
+            })
+        }
     }
-    catch(err){        
-        // console.log(err.sqlMessage)
-         next(boom.internal(err))
-        // res.json({
-        //     err : boom.internal(err)
-        // })
+    catch(err){           
+         next(boom.internal(err))    
     }
 }
 
@@ -34,7 +36,6 @@ exports.consultar = async(req,res,next)=>{
         })
     }
     catch(err){
-        console.log(err.message)                     
-        next(err.message)
+        next(boom.internal(err))    
     }
 }
