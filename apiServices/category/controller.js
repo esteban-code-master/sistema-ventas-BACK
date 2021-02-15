@@ -23,7 +23,8 @@ exports.createCategory = async ( req, res ,next) => {
     }
     catch(error) 
     {   
-       console.log(error)
+        console.log(err.message)                     
+        next(err.message)
     }  
 }
 
@@ -38,6 +39,7 @@ exports.consultCategory = async (req,res,next)=>{
         })
      }           
      catch(err){
-        console.log(err)
+        console.log(err.message)                     
+        next(err.message)
      }
 }
