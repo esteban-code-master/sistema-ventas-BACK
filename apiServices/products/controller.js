@@ -1,35 +1,43 @@
 const boom = require('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
-const {InsertarProducto,getProductos} = require('./service')
+const {
+    InsertProduct,  
+    getProduct
+} = require('./service')
+
 const seq = new Sequelizelib()
 
-exports.nuevoProducto = async (req,res,next) => {
+exports.createProduct = async (req,res,next) => {
     try {        
-        const db = await seq.connection()
-        const data = req.body;
+        const db = await seq.connection()    
+        const data = req.body   
+    
         if(data.code.length == 12){
-            await InsertarProducto(db,data)   
+            await db.transaction(async(transaction)=>{                      
+               await InsertProduct(db,transaction,data)                             
+            })  
+
             res.status(201).json({
                 status : res.statusCode,
                 message: 'create new product'
-            })
+            })      
         }
         else {
             res.status(422).json({
                 status : res.statusCode,
                 message: 'this code should be of twelve characther'
             })
-        }
+        }             
     }
-    catch(err){           
+    catch(err){                 
          next(boom.internal(err))    
     }
 }
 
-exports.consultar = async(req,res,next)=>{
+exports.getPagination = async(req,res,next)=>{
     try{
-        const db = await seq.connection()
-        const respuesta =  await getProductos(db)   
+        const db = await seq.connection()     
+        const respuesta =  await getProduct(db)   
 
         res.json({
             data : respuesta
@@ -37,5 +45,8 @@ exports.consultar = async(req,res,next)=>{
     }
     catch(err){
         next(boom.internal(err))    
+    }
+    finally{
+        await seq.close()
     }
 }

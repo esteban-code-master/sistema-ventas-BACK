@@ -30,7 +30,7 @@ exports.createCategory = async ( req, res ,next) => {
 exports.consultCategory = async (req,res,next)=>{
 
     try{
-        const db = await sequelize.connection()
+        const db = await sequelize.connection()        
         const getData = await getCategory(db)
         res.json({
             status: res.statusCode,

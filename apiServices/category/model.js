@@ -1,7 +1,7 @@
 const {  DataTypes } = require('sequelize');
 
-const Category = (sequelize) => {
-  return sequelize.define(
+module.exports = (sequelize) => {
+  const cate = sequelize.define(
     'prod_category',
     {
       id :{
@@ -18,6 +18,15 @@ const Category = (sequelize) => {
       createdAt: false,
     }
   )
+  cate.associate = (models) =>{
+    cate.hasOne(models.product,{     
+      foreignKey: 'id_category',             
+      as: "product"
+    });
+  
+  }
+
+  return cate
 }
 
-module.exports = Category
+// module.exports = Category
