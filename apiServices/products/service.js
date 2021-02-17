@@ -76,7 +76,7 @@ exports.getProduct = async (db,offset,limit) => {
 }
 
 
-exports.countProducts = (db) => {
+exports.countProducts = async(db) => {
     return new Promise ((resolve,reject)=>{
         Products(db)
             .count({
@@ -92,3 +92,55 @@ exports.countProducts = (db) => {
             })
     })
 }
+
+exports.updateProduct = async(db,data,id_product,transaction) =>{
+    return new Promise ((resolve,reject)=>{
+        Products(db)
+        .update({
+            code : data.code,
+            name: data.name,
+            description: data.description,
+            price : data.price,
+            existence: data.existence,
+            id_category : data.id_category,                
+        },
+        {
+            where :{
+                id : id_product
+            }
+        },
+        {
+            transaction
+        })
+        .then(async(resp)=>{                
+            resolve(await this.updateProdImage(db,id_product,data.urlImage,transaction))
+        })
+        .catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+exports.updateProdImage = (db,id_product,urlImage,transaction) =>{
+    return new Promise((resolve,reject)=>{
+        ProducImage(db)
+        .update({            
+            name : urlImage
+        },
+        {
+            where :{
+                id_product : id_product
+            }
+        },
+        {
+            transaction
+        })
+        .then((resp)=>{                                
+            resolve(resp)               
+        })
+        .catch((err)=>{            
+            reject(err)
+        })
+    })
+}
+

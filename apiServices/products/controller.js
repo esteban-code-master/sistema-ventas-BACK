@@ -3,7 +3,8 @@ const Sequelizelib = require('../../lib/sequelize')
 const {
     InsertProduct,  
     getProduct,
-    countProducts
+    countProducts,
+    updateProduct
 } = require('./service')
 
 const seq = new Sequelizelib()
@@ -41,7 +42,8 @@ exports.getPagination = async(req,res,next)=>{
         const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
         const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
         const listProducts =  await getProduct(db,offset,limit)   
-        res.json({  
+        res.status(200).json({  
+            status : res.statusCode,
             data : listProducts
         })
     }
@@ -55,11 +57,40 @@ exports.countProductController = async (req,res,next) =>{
     try{
         const db = await seq.connection()     
         const count  = await countProducts(db)
-        res.json({
+        res.status(200).json({
+            status : res.statusCode,
             count : count
         })
     }
     catch(err){
         next(boom.internal(err))    
     }  
+}
+
+exports.updateController = async (req,res,next) => {
+    try {
+        const db = await seq.connection()  
+        const id_product = req.params.id? req.params.id : null  
+        const data = req.body
+
+        if(id_product != null){                           
+            await db.transaction(async(transaction)=>{                      
+                 await updateProduct(db,data,id_product,transaction)   
+             })                                                     
+            res.status(201).json({
+                status : res.statusCode,
+                message : 'this product update successful'        
+            })
+        }
+        else {
+            res.status(422).json({
+                status : res.statusCode,
+                message: 'this id product is null'
+            })
+        }    
+    }   
+    catch (err) 
+    {
+        next(boom.internal(err))    
+    }
 }

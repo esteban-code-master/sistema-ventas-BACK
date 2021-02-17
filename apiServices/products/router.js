@@ -1,21 +1,15 @@
 const { 
   createProduct,
   getPagination,
-  countProductController
+  countProductController,
+  updateController
 } = require('./controller')
 
-
 const ProductosRouter = (router) => {    
-
-    router.post('/producto',(req,res,next) => {
-        createProduct(req,res,next)
-    })
-
-    router.get('/producto',(req,res,next) =>{
-        getPagination(req,res,next)
-    })
-
+    router.post('/producto',createProduct)
+    router.get('/producto',getPagination)
     router.get('/producto/count',countProductController)
+    router.put('/producto/:id',updateController)
 }
 
 
