@@ -44,10 +44,16 @@ exports.InsertImages = async (db,transaction,id,urlImage) => {
     })
 }
 
-exports.getProduct = async (db) => {      
+exports.getProduct = async (db,offset,limit) => {      
     return new Promise((resolve,reject)=>{                   
        Products(db)
-        .findAll({                  
+        .findAll({      
+           attributes: ['id','code','name','description','price','existence'],                            
+           offset: offset, 
+           limit: limit,        
+           where : {
+            status : true
+           },    
            include: [
                 {   
                     attributes: ['name'],

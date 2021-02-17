@@ -37,13 +37,16 @@ exports.createProduct = async (req,res,next) => {
 exports.getPagination = async(req,res,next)=>{
     try{
         const db = await seq.connection()     
-        const respuesta =  await getProduct(db)   
-
-        res.json({
-            data : respuesta
+        const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
+        const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
+        const listProducts =  await getProduct(db,offset,limit)   
+        res.json({  
+            data : listProducts
         })
     }
     catch(err){
         next(boom.internal(err))    
     }  
 }
+
+
