@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-// const Category = require('../category/model');
+const Category = require('../category/model');
+const ProducImage = require('./model-images')
 
 module.exports = (sequelize) => {
   const product = sequelize.define(
@@ -49,26 +50,21 @@ module.exports = (sequelize) => {
         updatedAt: false,
         createdAt: false,
     }
-  )
-  product.associate = (models) =>{    
-    product.belongsTo(models.category,{
-      foreignKey : 'id_category', 
-      as : "category"        
-    });
+  )  
+  
+  Category(sequelize).hasMany(product,{
+    foreignKey : 'id_category'
+  });
 
-    // product.belongsTo(models.prod_category,{
-    //   foreignKey: 'id_category' 
-    // });
-  }
+  product.belongsTo(Category(sequelize),{
+    foreignKey: 'id_category' 
+  });
 
-  // Category(sequelize).hasMany(product,{
-  //   foreignKey : 'id_category'
-  // });
-
-  // product.belongsTo(Category(sequelize),{
-  //   foreignKey: 'id_category' 
-  // });
+  product.hasMany(ProducImage(sequelize),{
+    foreignKey: 'id_product' 
+  })
+  ProducImage(sequelize).belongsTo(product,{
+    foreignKey: 'id_product' 
+  })
   return product
 }
-
-// module.exports = Products

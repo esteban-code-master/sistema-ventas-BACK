@@ -1,24 +1,23 @@
-const { Sequelize, DataTypes } = require('sequelize');
-
-const ProducImage = (sequelize) => {
-  return sequelize.define(
+const {DataTypes} = require('sequelize');
+module.exports = (sequelize) => {
+  const ProducImage = sequelize.define(
     'prod_image',
     {
       id : {
-        type: Sequelize.DataTypes.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },     
       id_product : {
-        type : Sequelize.DataTypes.INTEGER,
+        type : DataTypes.INTEGER,
         allowNull:  false,
         references : {
-          model : 'prod_category',
+          model : 'product',
           key : 'id'
         }
       },
       name : {
-        type : Sequelize.DataTypes.STRING,
+        type : DataTypes.STRING,
         allowNull:  false,
       }
     },
@@ -28,6 +27,7 @@ const ProducImage = (sequelize) => {
         createdAt: false,
     }
   )
+    
+  return ProducImage
 }
 
-module.exports = ProducImage

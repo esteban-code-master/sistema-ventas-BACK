@@ -45,8 +45,5 @@ exports.getPagination = async(req,res,next)=>{
     }
     catch(err){
         next(boom.internal(err))    
-    }
-    finally{
-        await seq.close()
-    }
+    }  
 }

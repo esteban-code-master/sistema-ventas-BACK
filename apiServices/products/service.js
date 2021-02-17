@@ -1,7 +1,5 @@
 const Products = require('./model')
-const Category = require('../category/model')
 const ProducImage = require('./model-images')
-
 
 exports.InsertProduct = async (db,transaction,data) => {
     return new Promise((resolve,reject)=>{      
@@ -46,24 +44,22 @@ exports.InsertImages = async (db,transaction,id,urlImage) => {
     })
 }
 
-exports.getProduct = async (db) => {
-    const datos = {}
-datos.connection = db
-datos.product = Products(datos.connection)
-datos.category = Category(datos.connection)
-datos.product.associate(datos)
-datos.category.associate(datos)
-
-console.log
-    return new Promise(async(resolve,reject)=>{                   
-     await  datos.product.findAll({                  
+exports.getProduct = async (db) => {      
+    return new Promise((resolve,reject)=>{                   
+       Products(db)
+        .findAll({                  
            include: [
-               {   
-                 association : "category",
-                 required: true                
-                }
+                {   
+                    attributes: ['name'],
+                    association : "prod_category",
+                    required: true 
+                },{
+                    association : "prod_images",
+                    attributes: ['name'],
+                    required: false
+                }               
             ],
-        })    
+        })   
         .then((res)=>{
             resolve(res)            
         })
