@@ -4,7 +4,8 @@ const {
     InsertProduct,  
     getProduct,
     countProducts,
-    updateProduct
+    updateProduct,
+    deleteProduct
 } = require('./service')
 
 const seq = new Sequelizelib()
@@ -91,6 +92,32 @@ exports.updateController = async (req,res,next) => {
     }   
     catch (err) 
     {
+        next(boom.internal(err))    
+    }
+}
+
+exports.deleteController = async(req,res,next) => {
+    try
+    {
+        const db = await seq.connection()  
+        const id_product =  req.params.id? req.params.id : null
+        if(id_product !== null){
+            const resp = await deleteProduct(db,id_product)
+            res.status(201).json({
+                status : res.statusCode,
+                data : resp,
+                message : 'this product update successful'        
+            })
+        }
+        else{
+            res.status(422).json({
+                status : res.statusCode,
+                message: 'this id product is null'
+            })
+        }
+    }
+    catch(err)
+    {   
         next(boom.internal(err))    
     }
 }

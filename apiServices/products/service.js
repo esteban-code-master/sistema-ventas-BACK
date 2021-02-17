@@ -144,3 +144,23 @@ exports.updateProdImage = (db,id_product,urlImage,transaction) =>{
     })
 }
 
+// this does remove the  product  by references embedded in the  database
+exports.deleteProduct = async (db,id_product) => {
+    return new Promise((resolve,reject)=>{
+        Products(db)
+        .update({
+            status : false 
+        },
+        {
+            where : {
+                id : id_product
+            }
+        })
+        .then((resp)=>{                                
+            resolve(resp)               
+        })
+        .catch((err)=>{            
+            reject(err)
+        })
+    })
+}
