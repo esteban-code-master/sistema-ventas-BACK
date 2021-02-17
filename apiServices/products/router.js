@@ -1,6 +1,7 @@
 const { 
   createProduct,
   getPagination,
+  countProductController
 } = require('./controller')
 
 
@@ -14,6 +15,7 @@ const ProductosRouter = (router) => {
         getPagination(req,res,next)
     })
 
+    router.get('/producto/count',countProductController)
 }
 
 

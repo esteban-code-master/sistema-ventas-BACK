@@ -75,3 +75,20 @@ exports.getProduct = async (db,offset,limit) => {
     })   
 }
 
+
+exports.countProducts = (db) => {
+    return new Promise ((resolve,reject)=>{
+        Products(db)
+            .count({
+                where : {
+                    status : true
+                }
+            })
+            .then((resp)=>{
+                resolve(resp)
+            })
+            .catch((err)=>{
+                reject(err)
+            })
+    })
+}

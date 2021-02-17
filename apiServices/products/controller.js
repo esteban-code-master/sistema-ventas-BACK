@@ -2,7 +2,8 @@ const boom = require('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
 const {
     InsertProduct,  
-    getProduct
+    getProduct,
+    countProducts
 } = require('./service')
 
 const seq = new Sequelizelib()
@@ -50,3 +51,15 @@ exports.getPagination = async(req,res,next)=>{
 }
 
 
+exports.countProductController = async (req,res,next) =>{
+    try{
+        const db = await seq.connection()     
+        const count  = await countProducts(db)
+        res.json({
+            count : count
+        })
+    }
+    catch(err){
+        next(boom.internal(err))    
+    }  
+}
