@@ -1,4 +1,4 @@
-const Category = require('./modelo')
+const Category = require('./model')
 
 exports.create = async (db,value) => {  
     return new Promise((resolve, reject) => {

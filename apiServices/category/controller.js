@@ -23,15 +23,14 @@ exports.createCategory = async ( req, res ,next) => {
     }
     catch(error) 
     {   
-        console.log(err.message)                     
-        next(err.message)
+        next(boom.internal(error))    
     }  
 }
 
 exports.consultCategory = async (req,res,next)=>{
 
     try{
-        const db = await sequelize.connection()
+        const db = await sequelize.connection()        
         const getData = await getCategory(db)
         res.json({
             status: res.statusCode,
@@ -39,7 +38,6 @@ exports.consultCategory = async (req,res,next)=>{
         })
      }           
      catch(err){
-        console.log(err.message)                     
-        next(err.message)
+        next(boom.internal(err))    
      }
 }

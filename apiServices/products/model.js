@@ -1,36 +1,38 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const Category = require('../category/model');
+const ProducImage = require('./model-images')
 
-const Products = (sequelize) => {
-  return sequelize.define(
+module.exports = (sequelize) => {
+  const product = sequelize.define(
     'product',
     {
       id : {
-        type: Sequelize.DataTypes.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
       code: {
-        type : Sequelize.DataTypes.STRING(24),
+        type : DataTypes.STRING(24),
         allowNull:  true
       },
       name : {
-        type : Sequelize.DataTypes.STRING(50),
+        type : DataTypes.STRING(50),
         allowNull:  false
       },
       description : {
-        type : Sequelize.DataTypes.TEXT,
+        type : DataTypes.TEXT,
         allowNull:  true
       },
       price : {
-        type : Sequelize.DataTypes.DOUBLE,
+        type : DataTypes.DOUBLE,
         allowNull:  false
       },
       existence : {
-        type : Sequelize.DataTypes.INTEGER,
+        type : DataTypes.INTEGER,
         allowNull:  false
       },
       id_category : {
-        type : Sequelize.DataTypes.INTEGER,
+        type : DataTypes.INTEGER,
         allowNull:  false,
         references : {
           model : 'prod_category',
@@ -38,7 +40,7 @@ const Products = (sequelize) => {
         }
       },
       status : {
-        type : Sequelize.DataTypes.BOOLEAN,
+        type : DataTypes.BOOLEAN,
         allowNull:  false,
         defaultValue: true,
       }
@@ -48,7 +50,21 @@ const Products = (sequelize) => {
         updatedAt: false,
         createdAt: false,
     }
-  )
-}
+  )  
+  
+  Category(sequelize).hasMany(product,{
+    foreignKey : 'id_category'
+  });
 
-module.exports = Products
+  product.belongsTo(Category(sequelize),{
+    foreignKey: 'id_category' 
+  });
+
+  product.hasMany(ProducImage(sequelize),{
+    foreignKey: 'id_product' 
+  })
+  ProducImage(sequelize).belongsTo(product,{
+    foreignKey: 'id_product' 
+  })
+  return product
+}

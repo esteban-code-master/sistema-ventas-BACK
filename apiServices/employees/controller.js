@@ -1,3 +1,4 @@
+const boom = require('@hapi/boom')
 const { db } = require('../../config')
 const Sequelizelib = require('../../lib/sequelize')
 const {newUsers, getUsers, updateUsers} = require('./service')
@@ -25,10 +26,12 @@ exports.controllerNewUsers = async (req, res, next) => {
 exports.controllerGetUsers = async(req, res, next) => {
     try{
         const db = await sequelize.connection()
-        const answer = await getUsers(db)
-
-        res.json({
-            data: answer
+        const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
+        const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
+        const listProducts = await getUsers(db, offset, limit)
+        res.status(200).json({
+            status: res.statusCode,
+            data: listProducts
         })
     }
     catch(err){

@@ -22,17 +22,20 @@ exports.newUsers = async (db, value) => {
     })
 }
 
-exports.getUsers = async (db) =>{
+exports.getUsers = async (db, offset, limit) =>{
     return new Promise((resolve,reject) =>{
         Users(db)
         .findAll({
+            attributes: ['id', 'name', 'ape_father', 'ape_mother', 'phone', 'email', 'user', 'password'],
+            offset: offset,
+            limit: limit,
             include: [
                 {
-                    model : roles,
-                },
+                    attributes: ['rol'],
+                    association: "roles",
+                    required: true
+                }
             ],
-            raw: true,
-            nest: true
         })
         .then((resp) => {
             resolve(resp)
@@ -53,7 +56,11 @@ exports.updateUsers = async(db, data) =>{
             
             name: data.name,
             ape_father: data.ape_father,
-            ape_mother: data.ape_mother
+            ape_mother: data.ape_mother,
+            phone: data.phone,
+            email: data.email,
+            user: data.user,
+            id_role: data.id_role
 
         },
         {

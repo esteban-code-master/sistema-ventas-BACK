@@ -1,40 +1,123 @@
-const Sequelizelib = require('../../lib/sequelize')
-const {InsertarProducto,getProductos} = require('./service')
 const boom = require('@hapi/boom')
+const Sequelizelib = require('../../lib/sequelize')
+const {
+    InsertProduct,  
+    getProduct,
+    countProducts,
+    updateProduct,
+    deleteProduct
+} = require('./service')
 
 const seq = new Sequelizelib()
 
-exports.nuevoProducto = async (req,res,next) => {
+exports.createProduct = async (req,res,next) => {
     try {        
-        const db = await seq.connection()
-        const data = req.body;
-        await InsertarProducto(db,data)   
+        const db = await seq.connection()    
+        const data = req.body   
+    
+        if(data.code.length == 12){
+            await db.transaction(async(transaction)=>{                      
+               await InsertProduct(db,transaction,data)                             
+            })  
 
-        res.status(201).json({
-            status : res.statusCode,
-            message: 'new product created.'
-        })
+            res.status(201).json({
+                status : res.statusCode,
+                message: 'create new product'
+            })      
+        }
+        else {
+            res.status(422).json({
+                status : res.statusCode,
+                message: 'this code should be of twelve characther'
+            })
+        }             
     }
-    catch(err){        
-        // console.log(err.sqlMessage)
-         next(boom.internal(err))
-        // res.json({
-        //     err : boom.internal(err)
-        // })
+    catch(err){                 
+         next(boom.internal(err))    
     }
 }
 
-exports.consultar = async(req,res,next)=>{
+exports.getPagination = async(req,res,next)=>{
     try{
-        const db = await seq.connection()
-        const respuesta =  await getProductos(db)   
-
-        res.json({
-            data : respuesta
+        const db = await seq.connection()     
+        const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
+        const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
+        const listProducts =  await getProduct(db,offset,limit)   
+        res.status(200).json({  
+            status : res.statusCode,
+            data : listProducts
         })
     }
     catch(err){
-        console.log(err.message)                     
-        next(err.message)
+        next(boom.internal(err))    
+    }  
+}
+
+
+exports.countProductController = async (req,res,next) =>{
+    try{
+        const db = await seq.connection()     
+        const count  = await countProducts(db)
+        res.status(200).json({
+            status : res.statusCode,
+            count : count
+        })
+    }
+    catch(err){
+        next(boom.internal(err))    
+    }  
+}
+
+exports.updateController = async (req,res,next) => {
+    try {
+        const db = await seq.connection()  
+        const id_product = req.params.id? req.params.id : null  
+        const data = req.body
+
+        if(id_product != null){                           
+            await db.transaction(async(transaction)=>{                      
+                 await updateProduct(db,data,id_product,transaction)   
+             })                                                     
+            res.status(201).json({
+                status : res.statusCode,
+                message : 'this product update successful'        
+            })
+        }
+        else {
+            res.status(422).json({
+                status : res.statusCode,
+                message: 'this id product is null'
+            })
+        }    
+    }   
+    catch (err) 
+    {
+        next(boom.internal(err))    
+    }
+}
+
+exports.deleteController = async(req,res,next) => {
+    try
+    {
+        const db = await seq.connection()  
+        const id_product =  req.params.id? req.params.id : null
+        if(id_product !== null){
+            const resp = await deleteProduct(db,id_product)
+            res.status(201).json({
+                status : res.statusCode,
+                data : resp,
+                message : 'this product update successful'        
+            })
+        }
+        else{
+            res.status(422).json({
+                status : res.statusCode,
+                message: 'this id product is null'
+            })
+        }
+    }
+    catch(err)
+    {   
+        next(boom.internal(err))    
     }
 }
