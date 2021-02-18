@@ -48,9 +48,7 @@ exports.getUsers = async (db) =>{
 
 exports.updateUsers = async(db, data) =>{
     return new Promise ((resolve, reject) => {
-        Users(db)
-        /*Antes de ingresar los datos crear una función aparte*/
-        
+        Users(db)       
         .update( {
             
             name: data.name,

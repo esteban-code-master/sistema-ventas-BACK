@@ -12,7 +12,7 @@ exports.nuevoProducto = async (req,res,next) => {
 
         res.status(201).json({
             status : res.statusCode,
-            message: 'create new product'
+            message: 'new product created.'
         })
     }
     catch(err){        
