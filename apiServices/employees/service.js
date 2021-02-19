@@ -1,17 +1,17 @@
-const Users = require('./modelo')
+const Users = require('./model')
 
-exports.newUsers = async (db, value) => {
+exports.newUsers = async (db, data) => {
     return new Promise((resolve, reject) =>{
         Users(db)
         .create({
-            name: value.name,
-            ape_father: value.ape_father,
-            ape_mother: value.ape_mother,
-            phone: value.phone,
-            email: value.email,
-            user: value.user,
-            password: value.password,
-            id_role: value.id_role
+            name : data.name,
+            ape_father : data.ape_father,
+            ape_mother : data.ape_mother,
+            phone : data.phone,
+            email : data.email,
+            user : data.user,
+            password : data.password,
+            id_role : data.id_role
         })
         .then((resp) => {
             resolve(resp)
@@ -31,7 +31,7 @@ exports.getUsers = async (db, offset, limit) =>{
             limit: limit,
             include: [
                 {
-                    attributes: ['rol'],
+                    attributes: ['name'],
                     association: "roles",
                     required: true
                 }
@@ -49,7 +49,7 @@ exports.getUsers = async (db, offset, limit) =>{
 
 
 
-exports.updateUsers = async(db, data) =>{
+exports.updateUsers = async(db, data, id_objetivo) =>{
     return new Promise ((resolve, reject) => {
         Users(db)       
         .update( {
@@ -66,7 +66,7 @@ exports.updateUsers = async(db, data) =>{
         {
             where:
             {
-                id: data.id
+                id: id_objetivo
             }
         })
         .then((resp) => {

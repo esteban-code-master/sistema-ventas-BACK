@@ -1,7 +1,8 @@
-const { DataTypes, Sequelize } = require('sequelize');
+const { DataTypes, Sequelize } = require('sequelize')
+const Roles = require('./model-roles')
 
-const Users = (sequelize) => {
-    return sequelize.define(
+module.exports = (sequelize) => {
+    const Users = sequelize.define(
         'user',
         {
             id:{
@@ -51,6 +52,14 @@ const Users = (sequelize) => {
             createdAt: false,
         }
     )
-}
 
-module.exports = Users
+    Roles(sequelize).hasMany(Users,{
+        foreignKey : 'id'
+    });
+
+    Users.belongsTo(Roles(sequelize),{
+        foreignKey : 'id_role'
+    });
+
+    return Users
+}

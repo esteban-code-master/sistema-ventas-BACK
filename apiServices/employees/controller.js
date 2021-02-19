@@ -10,6 +10,7 @@ exports.controllerNewUsers = async (req, res, next) => {
     try{
         const db = await sequelize.connection() //conexión con base de datos
         const data = req.body //se ingresan los datos en un objeto
+
         await newUsers(db, data) //se invoca a la función
 
         res.status(201).json({
@@ -44,8 +45,9 @@ exports.controllerGetUsers = async(req, res, next) => {
 exports.controllerUpdateUsers = async(req, res, next) => {
     try{
         const db = await sequelize.connection()
+        const id_employee = req.params.id? req.params.id : null
         const data = req.body
-        await updateUsers(db, data)
+        await updateUsers(db, data, id_employee)
 
         res.status(201).json({
             status: res.statusCode,

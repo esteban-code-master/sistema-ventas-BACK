@@ -1,9 +1,10 @@
-const {controllerNewUsers, controllerGetUsers, controllerUpdateUsers} = require('./controller')
+const {controllerNewUsers, controllerGetUsers, controllerUpdateUsers
+} = require('./controller')
 
 const EmpleadosRouter = (router) => {
-    router.post('/empleados', controllerNewUsers)
-    router.get('/producto',controllerGetUsers)
-    router.put('producto', controllerUpdateUsers)
+    router.post('/empleado', controllerNewUsers)
+    router.get('/empleado',controllerGetUsers)
+    router.put('/empleado/:id', controllerUpdateUsers)
 }
 
 module.exports = EmpleadosRouter
