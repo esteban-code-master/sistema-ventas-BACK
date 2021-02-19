@@ -55,7 +55,6 @@ module.exports = (sequelize) => {
   Category(sequelize).hasMany(product,{
     foreignKey : 'id_category'
   });
-
   product.belongsTo(Category(sequelize),{
     foreignKey: 'id_category' 
   });
@@ -66,5 +65,6 @@ module.exports = (sequelize) => {
   ProducImage(sequelize).belongsTo(product,{
     foreignKey: 'id_product' 
   })
+  
   return product
 }

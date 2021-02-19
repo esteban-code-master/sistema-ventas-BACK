@@ -14,5 +14,4 @@ const ProductosRouter = (router) => {
     router.delete('/producto/:id',deleteController)    
 }
 
-
 module.exports =  ProductosRouter
