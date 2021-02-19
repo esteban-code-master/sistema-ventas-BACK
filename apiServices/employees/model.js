@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
                 allowNull: false
             },
             id_role:{
-                type: Sequelize.DataTypes.INTEGER,
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 references :{
                     model: 'roles',
@@ -52,6 +52,7 @@ module.exports = (sequelize) => {
             createdAt: false,
         }
     )
+    
 
     Roles(sequelize).hasMany(Users,{
         foreignKey : 'id'

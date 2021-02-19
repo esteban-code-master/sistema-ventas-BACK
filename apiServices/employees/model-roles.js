@@ -2,7 +2,7 @@ const {DataTypes, Sequelize} = require('sequelize');
 
 const Roles = (sequelize) => {
     return sequelize.define(
-        'roles',
+        'rol',
         {
             id:{
                 type: DataTypes.INTEGER,

@@ -32,7 +32,7 @@ exports.getUsers = async (db, offset, limit) =>{
             include: [
                 {
                     attributes: ['name'],
-                    association: "roles",
+                    association: "rol",
                     required: true
                 }
             ],
