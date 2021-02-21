@@ -1,13 +1,30 @@
-const Category = require('./modelo')
+const Category = require('./model')
 
 exports.create = async (db,value) => {  
     return new Promise((resolve, reject) => {
         Category(db)
-            .create({           
-                name : value
-            })
-            .then((resp) => {        
-                resp ? resolve(resp) : reject(resp)
-            })
+        .create({           
+            name : value
+        })
+        .then((resp) => {        
+            resolve(resp) 
+        })
+        .catch((err)=>{
+            reject(err)
+        })
     })
 }
+
+exports.getCategory = async(db) => {
+    return new Promise ((resolve,reject)=>{
+        Category(db)
+        .findAll()
+        .then((resp)=>{
+            resolve(resp)
+        })
+        .catch((err)=>{
+            reject(err)
+        })
+    })    
+}
+
