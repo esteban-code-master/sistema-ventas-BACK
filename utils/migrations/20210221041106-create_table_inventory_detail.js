@@ -3,6 +3,11 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 return queryInterface.createTable('inventory_detail',{
+  id : {
+    type: Sequelize.DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
         id_prod_inventory:{
           type:Sequelize.DataTypes.INTEGER,
           references:{
@@ -33,8 +38,7 @@ return queryInterface.createTable('inventory_detail',{
               type:Sequelize.DataTypes.DOUBLE,
               allowNull:true
             }
-      }
-    )
+      })
   },
 
 
