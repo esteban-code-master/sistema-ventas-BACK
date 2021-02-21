@@ -1,4 +1,4 @@
-const { DataTypes, Sequelize } = require('sequelize')
+const { DataTypes} = require('sequelize')
 const Roles = require('./model-roles')
 
 module.exports = (sequelize) => {
@@ -38,10 +38,10 @@ module.exports = (sequelize) => {
                 allowNull: false
             },
             id_role:{
-                type: Sequelize.DataTypes.INTEGER,
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 references :{
-                    model: 'roles',
+                    model: 'rol',
                     key: 'id'
                 }
             }
@@ -54,7 +54,7 @@ module.exports = (sequelize) => {
     )
 
     Roles(sequelize).hasMany(Users,{
-        foreignKey : 'id'
+        foreignKey : 'id_role'
     });
 
     Users.belongsTo(Roles(sequelize),{
