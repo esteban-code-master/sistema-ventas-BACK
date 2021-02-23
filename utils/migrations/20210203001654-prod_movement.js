@@ -1,4 +1,5 @@
 'use strict';
+const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -9,13 +10,13 @@ module.exports = {
         autoIncrement: true
       },
       date: {
-        type : Sequelize.DataTypes.DATE,          
-        defaultValue: Sequelize.DataTypes.NOW,
-        allowNull:  true,
+        type : DataTypes.DATE,          
+        defaultValue: Sequelize.NOW,
+        allowNull:  false,
       },
       quantity:{
         type : Sequelize.DataTypes.INTEGER,
-        allowNull:  true
+        allowNull:  false
       },
       id_product :{
         type : Sequelize.DataTypes.INTEGER,

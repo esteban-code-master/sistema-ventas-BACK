@@ -1,5 +1,4 @@
 const boom = require('@hapi/boom')
-
 const Sequelizelib = require('../../lib/sequelize')
 const {newUsers, getUsers, updateUsers} = require('./service')
 
