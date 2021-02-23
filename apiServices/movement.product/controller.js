@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
-const { EntryProduct,MovementProduct } = require('./service')
+const { MovementProduct,getMovementAll } = require('./service')
 
 const seq = new Sequelizelib()
 const typeMovement = {"entryProduct" : 1, "outputProduct" : 2} // id reference is in table type_acction in mysql
@@ -42,7 +42,42 @@ exports.outputProductController = async(req,res,next) => {
     catch (err) 
     {
         next(boom.internal(err))
+    }
+}
 
+exports.getMovementEntryController = async(req,res,next) => {
+    try
+    {
+        const db = await seq.connection()     
+        const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
+        const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
+        const listEntryProduct = await getMovementAll(db,offset,limit,typeMovement.entryProduct)
+        res.status(200).json({
+            status : res.statusCode,            
+            data : listEntryProduct
+        })
+    }
+    catch(err)
+    {
+        next(boom.internal(err))
+    }
+}
+
+exports.getMovementOutputController = async(req,res,next) => {
+    try
+    {
+        const db = await seq.connection()     
+        const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
+        const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
+        const listOutputProduct = await getMovementAll(db,offset,limit,typeMovement.outputProduct)
+        res.status(200).json({
+            status : res.statusCode,            
+            data : listOutputProduct
+        })
+    }
+    catch(err)
+    {
+        next(boom.internal(err))
     }
 }
 
