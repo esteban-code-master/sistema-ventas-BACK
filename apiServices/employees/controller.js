@@ -1,16 +1,27 @@
 const boom = require('@hapi/boom')
+const bcrypt=require('bcrypt')
 const Sequelizelib = require('../../lib/sequelize')
 const {newUsers, getUsers, updateUsers} = require('./service')
 
 const sequelize = new Sequelizelib()
 
-/*Función para crear un nuevo usuario */
+
 exports.controllerNewUsers = async (req, res, next) => {
     try{
-        const db = await sequelize.connection() //conexión con base de datos
-        const data = req.body //se ingresan los datos en un objeto
+        const db = await sequelize.connection()
+        
+        /*Comprobar si ya se registró el usuario*/
 
-        await newUsers(db, data) //se invoca a la función
+        try {
+            const hash = await bcrypt.hash(req.body.password, 10);
+            req.body.password = hash;
+        } catch (err) {
+            next(boom.internal(err))
+        }
+
+        const data = req.body
+
+        await newUsers(db, data)
 
         res.status(201).json({
             status: res.statusCode,
@@ -22,7 +33,8 @@ exports.controllerNewUsers = async (req, res, next) => {
         next(boom.internal(err))
     }
 }
-/*Función para solicitar usuarios */
+
+
 exports.controllerGetUsers = async(req, res, next) => {
     try{
         const db = await sequelize.connection()
@@ -40,11 +52,12 @@ exports.controllerGetUsers = async(req, res, next) => {
 }
 
 
-/*Función para actualizar usuarios*/
+
 exports.controllerUpdateUsers = async(req, res, next) => {
     try{
         const db = await sequelize.connection()
         const id_employee = req.params.id? req.params.id : null
+
         const data = req.body
         await updateUsers(db, data, id_employee)
 

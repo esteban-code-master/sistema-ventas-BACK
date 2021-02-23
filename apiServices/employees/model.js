@@ -52,6 +52,7 @@ module.exports = (sequelize) => {
             createdAt: false,
         }
     )
+    
 
     Roles(sequelize).hasMany(Users,{
         foreignKey : 'id_role'
