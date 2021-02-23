@@ -1,9 +1,8 @@
 const ProdMovement = require('./model')
-const typeMovement = {"entryProduct" : 1, "outputProduct" : 2} // id reference is in table type_acction in mysql
 
-exports.EntryProduct = async (db,data) => {
+exports.MovementProduct  = (db,data,typeMovement) => {
     return new Promise ((resolve,reject)=>{
-        ProdMovement(db,typeMovement.entryProduct)
+        ProdMovement(db,typeMovement)
         .bulkCreate(data)
         .then((resp)=>{
             resolve(resp)
@@ -12,10 +11,6 @@ exports.EntryProduct = async (db,data) => {
             reject(err)
         })
     })
-}
-
-const OutputProduct = (db) => {
-
 }
 
 const getEntryProduct = (db) => {
