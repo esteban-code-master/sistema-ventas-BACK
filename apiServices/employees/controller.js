@@ -10,7 +10,6 @@ exports.controllerNewUsers = async (req, res, next) => {
     try{
         const db = await sequelize.connection()
         
-        /*Comprobar si ya se registró el usuario*/
 
         try {
             const hash = await bcrypt.hash(req.body.password, 10);
