@@ -3,7 +3,7 @@ const {
   } = require('./controller')
   
   const InventoryRouter = (router) => {    
-      router.post('/inventory',getinventory)  
+      router.get('/inventory',getinventory)  
   }
   
   

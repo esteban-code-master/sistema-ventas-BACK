@@ -1,6 +1,6 @@
-const {DataTypes, Sequelize}=require('sequelize')
-module.exports = (sequelize)=>{
-    const InventoryDetail = sequelize.define(
+const {DataTypes}=require('sequelize')
+module.exports = (conexionBd)=>{
+    const InventoryDetail = conexionBd.define(
         'inventory_detail',
         {
             id: {

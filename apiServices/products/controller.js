@@ -21,13 +21,13 @@ exports.createProduct = async (req,res,next) => {
             })  
 
             res.status(201).json({
-                status : res.statusCode,
+              //  status : res.statusCode,
                 message: 'create new product'
             })      
         }
         else {
             res.status(422).json({
-                status : res.statusCode,
+                //status : res.statusCode,
                 message: 'this code should be of twelve characther'
             })
         }             
