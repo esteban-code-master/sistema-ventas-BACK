@@ -1,5 +1,5 @@
 const {DataTypes, Sequelize } = require('sequelize')
-//const Session = require('') meter enlace a modelo de sesión
+//referencia a session
 
 module.exports = (sequelize) => {
     const Sales = sequelize.define(
