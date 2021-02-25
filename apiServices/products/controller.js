@@ -44,7 +44,8 @@ exports.getPagination = async(req,res,next)=>{
         const listProducts =  await getProduct(db,offset,limit)   
         res.status(200).json({  
             status : res.statusCode,                          
-            data : listProducts
+            user :  req.payload,
+            data : listProducts            
         })
     }
     catch(err){

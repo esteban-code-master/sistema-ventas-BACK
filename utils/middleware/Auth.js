@@ -2,19 +2,34 @@ const jwt = require('jsonwebtoken')
 const boom = require('@hapi/boom')
 const {JwtDecode} = require('../../service/jwt')
 
-exports.isAuth = (req,res,next) => {
-    if (!req.headers.authorization) {
-        const boomStatus = boom.forbidden();
-        return res.status(boomStatus.output.statusCode).json(boomStatus.output);
-    }
+const isAuth = (req,res,next) => {
+   
    try
-   {
-        const payload =  JwtDecode(req.headers.authorization.split(' ')[1])          
-        req.payload = payload
-        next()
+   {       
+        if(req.path != '/api/login')
+        {
+            if (!req.headers.authorization)
+            {
+                const boomStatus = boom.forbidden();
+                return res.status(boomStatus.output.statusCode).json(boomStatus.output);
+            }
+            else
+            {
+                const payload =  JwtDecode(req.headers.authorization.split(' ')[1])          
+                req.payload = payload
+                next()
+            }
+        }
+        else 
+        {
+            next()
+        }        
    }
    catch(err){
         const boomStatus = boom.unauthorized('The token has expired');
         return res.status(boomStatus.output.statusCode).json(boomStatus.output);
    }
 }
+
+
+module.exports = isAuth
