@@ -21,7 +21,23 @@ exports.newUsers = async (db, data) => {
         })
     })
 }
-
+exports.getAuthenticateUser = (db,user) => {
+    return new Promise((resolve,reject) => {
+        Users(db)
+        .findOne({
+            attributes : ['id', 'name','password','id_role'],
+            where : {
+                user : user
+            }
+        })
+        .then((user)=>{
+            resolve(user)
+        })
+        .catch((err)=>{
+            reject(err)
+        })
+    })
+}
 exports.getUsers = async (db, offset, limit) =>{
     return new Promise((resolve,reject) =>{
         Users(db)
