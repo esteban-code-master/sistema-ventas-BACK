@@ -11,10 +11,9 @@ const {
 const seq = new Sequelizelib()
 
 exports.createProduct = async (req,res,next) => {
-    try {        
+    try {               
         const db = await seq.connection()    
-        const data = req.body   
-    
+        const data = req.body               
         if(data.code.length == 12){
             await db.transaction(async(transaction)=>{                      
                await InsertProduct(db,transaction,data)                             
@@ -39,13 +38,14 @@ exports.createProduct = async (req,res,next) => {
 
 exports.getPagination = async(req,res,next)=>{
     try{
-        const db = await seq.connection()     
+        const db = await seq.connection()          
         const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
         const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
         const listProducts =  await getProduct(db,offset,limit)   
         res.status(200).json({  
-            status : res.statusCode,
-            data : listProducts
+            status : res.statusCode,                          
+            user :  req.payload,
+            data : listProducts            
         })
     }
     catch(err){

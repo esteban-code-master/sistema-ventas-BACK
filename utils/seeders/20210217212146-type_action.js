@@ -3,8 +3,8 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('type_action', [
-      { name : "entry"},
-      { name : "output"}
+      { id: 1 ,name : "entry_product"},
+      { id: 2 ,name : "output_product"}
   ]);
   },
 

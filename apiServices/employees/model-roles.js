@@ -1,25 +1,23 @@
-const {DataTypes, Sequelize} = require('sequelize');
+const {DataTypes} = require('sequelize');
 
-const Roles = (sequelize) => {
-    return sequelize.define(
+module.exports = (sequelize) => {
+    const Roles = sequelize.define(
         'rol',
         {
             id:{
                 type: DataTypes.INTEGER,
                 primaryKey: true,
-
             },
             name:{
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             }
         },
-        {
+        {          
             freezeTableName: true,
             updatedAt: false,
             createdAt: false
         }
     )
+    return Roles
 }
-
-module.exports = Roles
