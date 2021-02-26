@@ -23,7 +23,15 @@ module.exports = {
             model : 'user',
             key : 'id'
           }
-      }  
+      },
+      id_cashRegister : {
+        type : Sequelize.DataTypes.INTEGER,
+        allowNull:  false,
+        reference : {
+            model : 'cash_register',
+            key : 'id'
+        }
+    }    
   })
   // la columna type solo puede aceptar los valores de  "+"" o "-" que 
   // hacen la referencia de entrada y salida respectivamente
