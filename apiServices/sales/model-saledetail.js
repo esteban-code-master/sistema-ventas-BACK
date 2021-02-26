@@ -27,7 +27,7 @@ module.exports = (sequlize) => {
                     key: 'id'
                 }
             },
-            quantity:{
+            quanty:{
                 type: DataTypes.INTEGER,
                 allowNull: false
 
