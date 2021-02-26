@@ -18,7 +18,7 @@ exports.loginController = async(req,res,next) => {
                 IdEmpleado : login.id,
                 name : login.name,
                 role : login.id_role,
-                Post : 1,                
+                Post : 1,                                
             })
 
             res.status(200).json({
@@ -39,6 +39,7 @@ exports.loginController = async(req,res,next) => {
 exports.getDataFromToken = (req,res,next) => {    
     try
     {
+        console.log(req)
         const token = req.headers.authorization?.split(' ')[1];
         const info = token ? JwtDecode(token) : {};
 

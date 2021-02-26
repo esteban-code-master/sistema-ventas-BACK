@@ -1,10 +1,13 @@
 const Restriction  = {
-    "gerente"  : 2 ,
+    "gerente"  : 1 ,
     "cajero" : 2 ,
 }
 
 exports.PermissionManager = (req,res,next) =>{    
     basePermission(req.payload.role,Restriction.gerente,res)
+}
+exports.PermissionCajero = (req,res,next) =>{    
+    basePermission(req.payload.role,Restriction.cajero,res)
 }
 
 const basePermission = (permission,restriction,res) => {

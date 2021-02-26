@@ -5,6 +5,7 @@ const {
   updateController,
   deleteController
 } = require('./controller')
+
 const {PermissionManager} = require('../../utils/middleware/Roles')
 
 const ProductosRouter = (router) => {    

@@ -16,7 +16,7 @@ const isAuth = (req,res,next) => {
             else
             {
                 const payload =  JwtDecode(req.headers.authorization.split(' ')[1])          
-                req.payload = payload
+                req.payload = payload                
                 next()
             }
         }

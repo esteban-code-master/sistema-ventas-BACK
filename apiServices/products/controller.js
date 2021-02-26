@@ -11,9 +11,9 @@ const {
 const seq = new Sequelizelib()
 
 exports.createProduct = async (req,res,next) => {
-    try {        
+    try {               
         const db = await seq.connection()    
-        const data = req.body           
+        const data = req.body               
         if(data.code.length == 12){
             await db.transaction(async(transaction)=>{                      
                await InsertProduct(db,transaction,data)                             

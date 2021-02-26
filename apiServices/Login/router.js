@@ -1,3 +1,4 @@
+const isAuth = require('../../utils/middleware/Auth')
 const {loginController,getDataFromToken} = require('./controller')
 
 const LoginRouter = (router) => {
