@@ -2,13 +2,13 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('debts',{
-      id : {
+    await queryInterface.createTable('cash_register',{
+      id:{
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      id_user :{ 
+      id_user :{
         type : Sequelize.DataTypes.INTEGER,
         allowNull:  false,
         references : {
@@ -16,19 +16,24 @@ module.exports = {
           key : 'id'
         }
       },
-      date:{
+      post:{
+        type : Sequelize.DataTypes.INTEGER,
+        allowNull:  false,
+      },
+      date : {
         type : Sequelize.DataTypes.DATE,          
         defaultValue: Sequelize.DataTypes.NOW,
-        allowNull:  true,
+        allowNull:  false,
       },
-      amount : {
-        type : Sequelize.DataTypes.DOUBLE,
-        allowNull:  true
+      status_atm :{
+        type : Sequelize.DataTypes.BOOLEAN,          
+        defaultValue: false,
+        allowNull: false,
       }
     })
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('debts') 
+    await queryInterface.dropTable('cash_register')
   }
 };

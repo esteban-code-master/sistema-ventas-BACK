@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-   return queryInterface.createTable('roles',{
+   await queryInterface.createTable('rol',{
      id : {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
@@ -10,12 +10,12 @@ module.exports = {
      },
      name :{ 
       type : Sequelize.DataTypes.STRING(20),                
-      allowNull:  true,
+      allowNull:  false,
      }
    })
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('roles')  
+    await queryInterface.dropTable('rol')  
   }
 };

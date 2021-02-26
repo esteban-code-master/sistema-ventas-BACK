@@ -3,14 +3,14 @@ const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('prod_movement',{
+    await queryInterface.createTable('prod_movement',{
       id: {
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
       date: {
-        type : DataTypes.DATE,          
+        type :Sequelize.DataTypes.DATE,          
         defaultValue: Sequelize.NOW,
         allowNull:  false,
       },
@@ -46,6 +46,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('prod_movement')
+    await queryInterface.dropTable('prod_movement')
   }
 };
