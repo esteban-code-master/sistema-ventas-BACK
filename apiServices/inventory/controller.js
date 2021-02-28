@@ -2,16 +2,15 @@ const boom = require ('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
 const seq = new Sequelizelib()
 
-const{servicegetinventory}=require('./service')
+const{insertInventory}=require('./service')
 
-exports.getinventory = async (req,res,next) => {
+exports.createInventory = async (req,res,next) => {
     try{
-        const data = req.body
-        
         const db = await seq.connection()
-            await servicegetinventory(db,data)
-        res.json({
-            mensaje: "lo lograste"
+        const data = req.body    
+        const  ola  = await insertInventory(db,data)
+        res.json({            
+            mensaje: "Create new inventory"
         })
     }
     catch(err){

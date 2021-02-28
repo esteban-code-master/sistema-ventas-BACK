@@ -1,9 +1,9 @@
 const { 
-    getinventory
+    createInventory
   } = require('./controller')
   
   const InventoryRouter = (router) => {    
-      router.get('/inventory',getinventory)  
+      router.post('/inventory',createInventory)  
   }
   
   

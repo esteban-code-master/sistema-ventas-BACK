@@ -1,20 +1,21 @@
-const InventoryDetail = require ('./model_detail')
+const inventory_Prod = require ('./model_Prod')
 
-exports.servicegetinventory = async (db,data)=>{
-    InventoryDetail(db)
-    .create({
-        id: data.code,
-        id_prod_inventory: data.id_prod_inventory,
-        id_product: data.id_product,
-        Stock_real: data.Stock_real,
-        Stock_system : data.Stock_system,
-        Difference: data.Difference,
-        Expenses:data.Expenses
-    })
-    .then((resp)=>{
-        resolve(resp)
-    })
-    .catch((err)=>{
-        reject(err)
-    })
+exports.insertInventory = async (db,data)=>{
+    return new Promise((resolve,reject)=>{
+        inventory_Prod(db)
+        .create({
+            date:data.date,
+            id_user:data.id_user
+        })
+        .then((resp)=>{
+            console.log(resp.getDataValue("id"));
+            resolve(resp)
+        })
+        .catch((err)=>{
+            reject(err)
+        })
+      })
 }
+//huevos
+//tortillas
+//jamones
