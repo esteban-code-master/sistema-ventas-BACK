@@ -8,6 +8,14 @@ module.exports = {
           primaryKey: true,
           autoIncrement: true
         },
+        id_product:{
+          type : Sequelize.DataTypes.INTEGER,
+          allowNull:  false,
+          references : {
+              model : 'product',
+              key: 'id'
+          }
+       },
         quantity : {
           type : Sequelize.DataTypes.INTEGER,
           allowNull:  false,
