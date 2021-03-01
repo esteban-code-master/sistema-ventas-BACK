@@ -1,6 +1,6 @@
 const Promotion =  require('./model')
 
-exports.createPromotion = (sequelize,data) => {
+exports.createPromotion = (db,data) => {
     return new Promise((resolve,reject)=>{
         Promotion(db)
         .create({
@@ -19,11 +19,14 @@ exports.createPromotion = (sequelize,data) => {
 }
 
 
-exports.createPromotion = (sequelize) => {
+exports.getAssociationPromotion = (db,IdProduct) => {
     return new Promise((resolve,reject)=>{
         Promotion(db)
-        .create({
-            
+        .findAll({
+            attributes: ['id_product','quantity','reduction','type'],
+            where : {                
+                id_product : IdProduct
+            }
         })
         .then((promotion)=>{
             resolve(promotion)
