@@ -11,6 +11,7 @@ module.exports = (conexionBd)=>{
             },
             date : {
                 type : DataTypes.DATE,
+                defaultValue: DataTypes.NOW,
                 allowNull: false
             },
             id_user:{
