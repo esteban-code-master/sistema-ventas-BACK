@@ -8,7 +8,7 @@ exports.insertInventory = async (db,data)=>{
             id_user:data.id_user
         })
         .then((resp)=>{
-            this.InventoryDetail(db,data,resp.dataValues.id,data.id_prod_inventory)
+            this.InventoryDetail(db,data,resp.dataValues.id)
             resolve(resp)
         })
         .catch((err)=>{
@@ -21,11 +21,11 @@ exports.InventoryDetail = async (db,data,id_prod_inventory)=>{
         InventoryDetail(db)
         .create({
             id_prod_inventory: id_prod_inventory,
-            id_product:data.id_product,
+            id_product:2,
             Stock_real:data.Stock_real,
-            Stock_system:data.Stock_system,
-            Difference:data.Difference,
-            Expenses:data.Expenses
+            Stock_system:3,
+            Difference:0,
+            Expenses:0
         })
         .then((resp)=>{
             resolve(resp)
