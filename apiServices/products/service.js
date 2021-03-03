@@ -75,7 +75,6 @@ exports.getProduct = async (db,offset,limit) => {
     })   
 }
 
-
 exports.countProducts = async(db) => {
     return new Promise ((resolve,reject)=>{
         Products(db)

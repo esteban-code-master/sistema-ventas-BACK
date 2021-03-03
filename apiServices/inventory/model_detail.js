@@ -43,7 +43,7 @@ module.exports = (conexionBd)=>{
         },
         {
             freezeTableName: true,
-            updateAt: false,
+            updatedAt: false,
             createdAt: false,
         }
     )
