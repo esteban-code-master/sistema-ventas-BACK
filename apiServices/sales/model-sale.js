@@ -1,5 +1,5 @@
 const {DataTypes, Sequelize } = require('sequelize')
-//referencia a session
+const User = require('../employees/model')
 
 module.exports = (sequelize) => {
     const Sales = sequelize.define(
@@ -13,13 +13,17 @@ module.exports = (sequelize) => {
                 type:DataTypes.DATE,
                 allowNull: false
             },
-            id_session:{
+            id_user:{
                 type: DataTypes.INTEGER,
                 allowNull: false,
-                /*references: {
-                    model: 'sesion',
+                references: {
+                    model: 'user',
                     key: 'id'
-                }*/
+                }
+            },
+            post:{
+                type: DataTypes.INTEGER,
+                allowNull: false
             }
         },
         {
@@ -29,5 +33,14 @@ module.exports = (sequelize) => {
         }
         
     )
+
+    User(sequelize).hasMany(Sale,{
+        foreignKey : 'id_user'
+    });
+
+    Sale.belongsTo(User(sequelize),{
+        foreignKey : 'id_user'
+    });
+    
     return Sales
 }

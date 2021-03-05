@@ -1,14 +1,15 @@
 const { Transaction } = require('sequelize/types')
 const Sales = require('./model-sale')
-const SaleDetails = require('./model-saledetail')
+const SaleDetails = require('./model')
 
-//AddnewSale
+
 exports.newSale = async (db, data) => {
     return new Promise((resolve, reject) =>{
         Sales(db)
         .create({
             date: data.date,
-            id_session: data.id_session
+            id_user: data.id_user, //por modificar
+            post: data.post
         })
         .then((resp) =>{
             resolve(resp)
@@ -47,8 +48,9 @@ exports.newSaleDetails = async (db, data) => {
         })
     })
 }*/
-//UpdateSale
-exports.updateSaleDetails = async(db, data) => {
+
+
+exports.updateSaleDetails = async(db, data, id_objetivo) => {
     return new Promise((resolve, reject) => {
         SaleDetails(db)
         .create({
@@ -57,6 +59,12 @@ exports.updateSaleDetails = async(db, data) => {
             quanty: data.quanty,
             price: data.price,
             amount: data.amount
+        },
+        {
+            where:
+            {
+                id: id_objetivo
+            }
         })
         .then((resp) => {
             resolve(resp)
@@ -67,4 +75,32 @@ exports.updateSaleDetails = async(db, data) => {
     })
 }
 
-//ShowSale
+
+exports.getAllSales = async(db, offset, limit) =>{
+    return new Promise((resolve, reject) =>{
+        SaleDetails(db)
+        .findAll({
+            attributes : ['id', 'quanty', 'price', 'amount'],
+            offset: offset,
+            limit: limit,
+            include : [
+                {
+                    attributes: ['date', 'post'], //esta tabla tiene otro id
+                    association: 'sale',
+                    required: true
+                },
+                {
+                    attributes: ['code', 'name', 'price'],
+                    association: 'product',
+                    required: true
+                }
+            ],
+        })
+        .then((resp) => {
+            resolve(resp)
+        })
+        .catch((err) => {
+            reject(err)
+        })
+    })
+}

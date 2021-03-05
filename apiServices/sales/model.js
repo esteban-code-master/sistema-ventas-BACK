@@ -46,7 +46,23 @@ module.exports = (sequlize) => {
             updatedAt: false,
             createdAt: false
         }
-    );
+    )
+    
+    Sale(sequelize).hasMany(SaleDetails,{
+        foreignKey : 'id_sale'
+    });
+
+    SaleDetails.belongsTo(Sale(sequelize),{
+        foreignKey : 'id_sale'
+    });
+
+    Products(sequelize).hasMany(SaleDetails,{
+        foreignKey : 'id_product'
+    });
+
+    SaleDetails.belongsTo(Products(sequelize),{
+        foreignKey : 'id_product'
+    });
 
     return SaleDetails
 }

@@ -42,7 +42,7 @@ exports.getUsers = async (db, offset, limit) =>{
     return new Promise((resolve,reject) =>{
         Users(db)
         .findAll({
-            // attributes: ['id', 'name', 'ape_father', 'ape_mother', 'phone', 'email', 'user', 'password'],
+            attributes: ['id', 'name', 'ape_father', 'ape_mother', 'phone', 'email', 'user', 'password'],
             offset: offset,
             limit: limit,
             include: [
