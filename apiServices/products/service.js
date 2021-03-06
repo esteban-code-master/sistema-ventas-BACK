@@ -43,7 +43,6 @@ exports.InsertImages = async (db,transaction,id,urlImage) => {
         })
     })
 }
-
 exports.getProduct = async (db,offset,limit) => {      
     return new Promise((resolve,reject)=>{                   
        Products(db)
@@ -159,6 +158,24 @@ exports.deleteProduct = async (db,id_product) => {
             resolve(resp)               
         })
         .catch((err)=>{            
+            reject(err)
+        })
+    })
+}
+exports.findProducts = async (db)=>{
+    return new Promise((resolve,reject)=>{
+        Products(db)
+        .findAll({
+            attributes:["id","existence","price"],
+            where:
+            {
+                id:1
+            }
+        })
+        .then((resp)=>{
+            resolve(resp)
+        })
+        .catch((err)=>{
             reject(err)
         })
     })

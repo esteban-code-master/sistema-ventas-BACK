@@ -1,5 +1,7 @@
 const boom = require('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
+
+
 const {
     InsertProduct,  
     getProduct,
@@ -36,6 +38,7 @@ exports.createProduct = async (req,res,next) => {
          next(boom.internal(err))    
     }
 }
+
 
 exports.getPagination = async(req,res,next)=>{
     try{
@@ -121,3 +124,5 @@ exports.deleteController = async(req,res,next) => {
         next(boom.internal(err))    
     }
 }
+
+

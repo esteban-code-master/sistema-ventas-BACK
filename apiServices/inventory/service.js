@@ -28,6 +28,7 @@ exports.InventoryDetail = async (db,data,id_prod_inventory)=>{
             Expenses:0
         })
         .then((resp)=>{
+            console.log(resp);
             resolve(resp)
         })
         .catch((err)=>{

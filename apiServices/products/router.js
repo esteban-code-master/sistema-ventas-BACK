@@ -3,7 +3,7 @@ const {
   getPagination,
   countProductController,
   updateController,
-  deleteController
+  deleteController,
 } = require('./controller')
 
 const ProductosRouter = (router) => {    
