@@ -2,7 +2,7 @@ const {DataTypes, Sequelize } = require('sequelize')
 const User = require('../employees/model')
 
 module.exports = (sequelize) => {
-    const Sales = sequelize.define(
+    const Sale = sequelize.define(
         'sale',
         {
             id:{
@@ -42,5 +42,5 @@ module.exports = (sequelize) => {
         foreignKey : 'id_user'
     });
     
-    return Sales
+    return Sale
 }

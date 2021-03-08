@@ -1,11 +1,12 @@
+
 const {DataTypes, Sequelize } = require('sequelize')
 const Sale = require('./model-sale')
 const Products = require('../products/model')
 
 
-module.exports = (sequlize) => {
+module.exports = (sequelize) => {
     const SaleDetails = sequelize.define(
-        'sale-detail',
+        'sale_detail',
         {
             id:{
                 type: DataTypes.INTEGER,
@@ -19,7 +20,7 @@ module.exports = (sequlize) => {
                     key: 'id'
                 }
             },
-            id_prod:{
+            id_product:{
                 type:  DataTypes.INTEGER,
                 allowNull: false,
                 references : {

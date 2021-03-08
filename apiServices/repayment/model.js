@@ -1,14 +1,15 @@
-const {DataTypes, Sequelize } = require('sequelize')
-const Sale = require('./model-sale')
+const {DataTypes} = require('sequelize')
+const Sale = require('../sales/model-sale')
 const Products = require('../products/model')
 
 module.exports = (sequelize) => {
-    const Repayment = sequelize.define(
+    const repayment = sequelize.define(
         'repayment',
         {
             id:{
                 type: DataTypes.INTEGER,
-                primaryKey: true
+                primaryKey: true,
+                autoIncrement: true
             },
             id_sale:{
                 type: DataTypes.INTEGER,
@@ -41,5 +42,22 @@ module.exports = (sequelize) => {
             createdAt: false
         }
     )
-    return Repayment
+
+    Sale(sequelize).hasMany(repayment,{
+        foreignKey : 'id_sale'
+    });
+
+    repayment.belongsTo(Sale(sequelize),{
+        foreignKey : 'id_sale'
+    });
+
+    Products(sequelize).hasMany(repayment,{
+        foreignKey : 'id_product'
+    });
+
+    repayment.belongsTo(Products(sequelize),{
+        foreignKey : 'id_product'
+    });
+    
+    return repayment
 }

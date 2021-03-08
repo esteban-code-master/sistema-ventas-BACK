@@ -1,18 +1,25 @@
-const { Transaction } = require('sequelize/types')
 const Sales = require('./model-sale')
 const SaleDetails = require('./model')
 
 
-exports.newSale = async (db, data) => {
+exports.newSale = async (db, transaction, data) => {
     return new Promise((resolve, reject) =>{
         Sales(db)
         .create({
             date: data.date,
-            id_user: data.id_user, //por modificar
+            id_user: data.id_user, 
             post: data.post
+        },
+        {
+            transaction
         })
-        .then((resp) =>{
-            resolve(resp)
+        .then(async(sale)=>{
+            if(data.quanty && data.price && data.amount){
+                //obtener id del último insert y ponerlo en id_sale
+                //console.log(sale_detail.dataValues.id)
+                await this.newSaleDetails(db,transaction,sale.dataValues.id, data)
+            }
+            resolve(sale)
         })
         .catch((err) => {
             reject(err)
@@ -20,15 +27,18 @@ exports.newSale = async (db, data) => {
     })
 }
 
-exports.newSaleDetails = async (db, data) => {
+exports.newSaleDetails = async (db, transaction, id, data) => {
     return new Promise((resolve, reject) => {
         SaleDetails(db)
         .create({
-            id_sale: data.id_sale,
+            id_sale: id,
             id_product: data.id_product,
             quanty: data.quanty,
             price: data.price,
             amount: data.amount
+        },
+        {
+            transaction
         })
         .then((resp) =>{
             resolve(resp)
@@ -39,21 +49,53 @@ exports.newSaleDetails = async (db, data) => {
     })
 }
 
-//EraseSale
-/*exports.eraseSaleDetails = async (db, data) => {
+exports.eraseSaleDetails = async (db, transaction, id_objetivo) => {
     return new Promise((resolve, reject) => {
         SaleDetails(db)
-        .create({
-            
+        .destroy({
+            where:
+            {
+                id_sale: id_objetivo
+            }
+        },
+        {
+            transaction
+        })
+        .then(async(sale)=> {
+            await this.eraseSale(db,transaction,id_objetivo)
+            resolve(sale)
+        })
+        .catch((err) =>{
+            reject(err)
         })
     })
-}*/
+}
 
+exports.eraseSale = async (db, transaction, id_objetivo) => {
+    return new Promise((resolve, reject) => {
+        Sales(db)
+        .destroy({
+            where:
+            {
+                id:id_objetivo
+            }
+        },
+        {
+            transaction
+        })
+        .then((resp) =>{
+            resolve(resp)
+        })
+        .catch((err) => {
+            reject(err)
+        })
+    })
+}
 
-exports.updateSaleDetails = async(db, data, id_objetivo) => {
+exports.updateSaleDetails = async(db, transaction, data, id_objetivo) => {
     return new Promise((resolve, reject) => {
         SaleDetails(db)
-        .create({
+        .update({
             id_sale: data.id_sale,
             id_product: data.id_product,
             quanty: data.quanty,
@@ -63,13 +105,42 @@ exports.updateSaleDetails = async(db, data, id_objetivo) => {
         {
             where:
             {
-                id: id_objetivo
+                id_sale: id_objetivo
             }
+        },
+        {
+            transaction
         })
-        .then((resp) => {
-            resolve(resp)
+        .then(async(sale)=>{
+            await this.updateSale(db, transaction, data, id_objetivo)
+            resolve(sale)
         })
         .catch((err) =>{
+            reject(err)
+        })
+    })
+}
+
+exports.updateSale = async(db, transaction, data, id_objetivo) =>{
+    return new Promise((resolve, reject) =>{
+        Sales(db)
+        .update({
+            id_user:data.id_user,
+            post: data.post
+        },
+        {
+            where:
+            {
+                id: id_objetivo
+            }
+        },
+        {
+            transaction
+        })
+        .then((resp) =>{
+            resolve(resp)
+        })
+        .catch((err) => {
             reject(err)
         })
     })

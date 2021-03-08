@@ -40,6 +40,7 @@ exports.controllerGetUsers = async(req, res, next) => {
         const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
         const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
         const listProducts = await getUsers(db, offset, limit)
+        
         res.status(200).json({
             status: res.statusCode,
             data: listProducts
@@ -56,8 +57,8 @@ exports.controllerUpdateUsers = async(req, res, next) => {
     try{
         const db = await sequelize.connection()
         const id_employee = req.params.id? req.params.id : null
-
         const data = req.body
+
         await updateUsers(db, data, id_employee)
 
         res.status(201).json({

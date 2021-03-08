@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
             id:{
                 type: DataTypes.INTEGER,
                 primaryKey: true,
+                autoIncrement: true
             },
             name:{
                 type: DataTypes.STRING,
@@ -53,7 +54,6 @@ module.exports = (sequelize) => {
         }
     )
     
-
     Roles(sequelize).hasMany(Users,{
         foreignKey : 'id_role'
     });

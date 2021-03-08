@@ -21,6 +21,7 @@ exports.newUsers = async (db, data) => {
         })
     })
 }
+
 exports.getAuthenticateUser = (db,user) => {
     return new Promise((resolve,reject) => {
         Users(db)
@@ -38,6 +39,7 @@ exports.getAuthenticateUser = (db,user) => {
         })
     })
 }
+
 exports.getUsers = async (db, offset, limit) =>{
     return new Promise((resolve,reject) =>{
         Users(db)
@@ -63,13 +65,10 @@ exports.getUsers = async (db, offset, limit) =>{
     })
 }
 
-
-
 exports.updateUsers = async(db, data, id_objetivo) =>{
     return new Promise ((resolve, reject) => {
         Users(db)       
         .update( {
-            
             name: data.name,
             ape_father: data.ape_father,
             ape_mother: data.ape_mother,
@@ -77,7 +76,6 @@ exports.updateUsers = async(db, data, id_objetivo) =>{
             email: data.email,
             user: data.user,
             id_role: data.id_role
-
         },
         {
             where:
