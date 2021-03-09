@@ -1,4 +1,5 @@
 const { DataTypes} = require('sequelize')
+const Sequelize = require('sequelize')
 const Roles = require('./model-roles')
 
 module.exports = (sequelize) => {
@@ -51,9 +52,9 @@ module.exports = (sequelize) => {
             freezeTableName: true,
             updatedAt: false,
             createdAt: false,
-        }
+        },
     )
-    
+
     Roles(sequelize).hasMany(Users,{
         foreignKey : 'id_role'
     });
@@ -64,3 +65,4 @@ module.exports = (sequelize) => {
 
     return Users
 }
+

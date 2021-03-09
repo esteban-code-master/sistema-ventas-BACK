@@ -10,9 +10,10 @@ const {
 
 exports.controllerNewRepayments = async (req, res, next) => {
     try{
-        const db = sequelize.connection()
+        const db = await sequelize.connection()
         const data = req.body
-        
+
+        console.log(req)
         await createRepayment(db, data)
 
         res.status(201).json({
@@ -27,7 +28,7 @@ exports.controllerNewRepayments = async (req, res, next) => {
 
 exports.controllerGetRepayments = async(req, res, next) => {
     try {
-        const db = sequelize.connection()
+        const db = await sequelize.connection()
         const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
         const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
 
@@ -44,7 +45,7 @@ exports.controllerGetRepayments = async(req, res, next) => {
 
 exports.controllerUpdateRepayments = async(req, res, next) => {
     try {
-        const db = sequelize.connection()
+        const db = await sequelize.connection()
         const data = req.body
         const id_objetivo = req.params.id? req.params.id : null //investigar
 
@@ -62,7 +63,7 @@ exports.controllerUpdateRepayments = async(req, res, next) => {
 
 exports.controllerDeleteRepayments = async (req, res, next) => {
     try {
-        const db = sequelize.connection()
+        const db = await sequelize.connection()
         const id_objetivo = req.params.id? req.params.id : null
         await deleteRepayment(db, id_objetivo)
 

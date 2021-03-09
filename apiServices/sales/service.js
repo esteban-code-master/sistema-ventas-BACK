@@ -7,6 +7,7 @@ exports.newSale = async (db, transaction, data) => {
         Sales(db)
         .create({
             date: data.date,
+            //date: sequelize.query('SELECT NOW();'),
             id_user: data.id_user, 
             post: data.post
         },
@@ -15,8 +16,6 @@ exports.newSale = async (db, transaction, data) => {
         })
         .then(async(sale)=>{
             if(data.quanty && data.price && data.amount){
-                //obtener id del último insert y ponerlo en id_sale
-                //console.log(sale_detail.dataValues.id)
                 await this.newSaleDetails(db,transaction,sale.dataValues.id, data)
             }
             resolve(sale)

@@ -1,7 +1,7 @@
-
 const {DataTypes, Sequelize } = require('sequelize')
 const Sale = require('./model-sale')
 const Products = require('../products/model')
+
 
 
 module.exports = (sequelize) => {
@@ -10,7 +10,8 @@ module.exports = (sequelize) => {
         {
             id:{
                 type: DataTypes.INTEGER,
-                primaryKey: true
+                primaryKey: true,
+                autoIncrement: true
             },
             id_sale:{
                 type: DataTypes.INTEGER,
@@ -46,9 +47,8 @@ module.exports = (sequelize) => {
             freezeTableName: true,
             updatedAt: false,
             createdAt: false
-        }
+        },
     )
-    
     Sale(sequelize).hasMany(SaleDetails,{
         foreignKey : 'id_sale'
     });
@@ -64,6 +64,39 @@ module.exports = (sequelize) => {
     SaleDetails.belongsTo(Products(sequelize),{
         foreignKey : 'id_product'
     });
+
+    function getExistence(idobjetivo) {
+        return Products(sequelize).findOne({
+            where: {
+                "id" : idobjetivo
+            }
+        });
+    }
+
+    SaleDetails.afterCreate(async(res) => {
+        var idobjetivo = res.dataValues.id_product
+        var cantcomprada = res.dataValues.quanty
+
+        const cantalmacen = new Promise((resolve, reject) => {
+            getExistence(idobjetivo).then(function(result){
+                resolve(result.existence)
+            })
+           
+        })
+
+        cantalmacen.then( function(cantalmacenada){
+            console.log("producto comprado: ", cantcomprada)
+            console.log("producto en almacen: ", cantalmacenada)
+            var cantidadresta = cantalmacenada - cantcomprada
+            console.log("resultado: ", cantidadresta)
+            if (cantalmacenada - cantcomprada < 0){
+                sequelize.query('UPDATE product set existence = 0 where id =' + idobjetivo)    
+            }
+            else{
+                sequelize.query('UPDATE product set existence = ' + cantidadresta + ' where id = ' + idobjetivo)    
+            }
+        })
+    })
 
     return SaleDetails
 }

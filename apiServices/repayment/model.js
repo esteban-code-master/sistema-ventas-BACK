@@ -1,4 +1,5 @@
 const {DataTypes} = require('sequelize')
+const Sequelize = require('sequelize')
 const Sale = require('../sales/model-sale')
 const Products = require('../products/model')
 
@@ -59,5 +60,12 @@ module.exports = (sequelize) => {
         foreignKey : 'id_product'
     });
     
+    repayment.beforeCreate(async(req) => {
+        
+        req.dataValues.date = await sequelize.query('SELECT NOW()')
+        console.log(req.dataValues.date)
+        
+        
+    })
     return repayment
 }
