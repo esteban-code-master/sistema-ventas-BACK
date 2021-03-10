@@ -1,23 +1,25 @@
 
+const {  DataTypes } = require('sequelize');
+
 module.exports = (sequelize) => {
     return sequelize.define(
         'cash',
         {
             id : {
-                type: Sequelize.DataTypes.INTEGER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             quantity : {
-                type : Sequelize.DataTypes.DOUBLE,
+                type : DataTypes.DOUBLE,
                 allowNull:  false,
             },
             type: {
-                type : Sequelize.DataTypes.CHAR(1),
+                type : DataTypes.CHAR(1),
                 allowNull:  false,
             },
             id_user :{
-                type : Sequelize.DataTypes.INTEGER,
+                type : DataTypes.INTEGER,
                 allowNull:  false,
                 reference : {
                     model : 'user',
@@ -25,7 +27,7 @@ module.exports = (sequelize) => {
                 }
             },
             id_cashRegister : {
-                type : Sequelize.DataTypes.INTEGER,
+                type : DataTypes.INTEGER,
                 allowNull:  false,
                 reference : {
                     model : 'cash_register',
