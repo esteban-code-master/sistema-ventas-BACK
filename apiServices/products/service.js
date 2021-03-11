@@ -166,11 +166,7 @@ exports.findProducts = async (db)=>{
     return new Promise((resolve,reject)=>{
         Products(db)
         .findAll({
-            attributes:["id","existence","price"],
-            where:
-            {
-                id:1
-            }
+            attributes:["id","price","existence"]
         })
         .then((resp)=>{
             resolve(resp)

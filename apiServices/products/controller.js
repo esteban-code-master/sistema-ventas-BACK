@@ -1,7 +1,6 @@
 const boom = require('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
 
-
 const {
     InsertProduct,  
     getProduct,
