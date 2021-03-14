@@ -6,8 +6,6 @@ exports.newSale = async (db, transaction, data) => {
     return new Promise((resolve, reject) =>{
         Sales(db)
         .create({
-            date: data.date,
-            //date: sequelize.query('SELECT NOW();'),
             id_user: data.id_user, 
             post: data.post
         },

@@ -30,7 +30,8 @@ module.exports = (sequelize) => {
             },
             date:{
                 type: DataTypes.DATE,
-                allowNull: false
+                allowNull: false,
+                default: DataTypes.NOW
             },
             amount:{
                 type: DataTypes.DOUBLE,

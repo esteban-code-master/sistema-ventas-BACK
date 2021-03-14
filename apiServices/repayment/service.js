@@ -7,8 +7,6 @@ exports.createRepayment = async(db, data) => {
         .create({
             id_sale: data.id_sale,
             id_product:data.id_product,
-            date: "2021-02-02 03:56:46",
-            //date: data.date,
             amount:data.amount
         })
         .then((resp) => {

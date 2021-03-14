@@ -83,12 +83,8 @@ module.exports = (sequelize) => {
             })
            
         })
-
         cantalmacen.then( function(cantalmacenada){
-            console.log("producto comprado: ", cantcomprada)
-            console.log("producto en almacen: ", cantalmacenada)
             var cantidadresta = cantalmacenada - cantcomprada
-            console.log("resultado: ", cantidadresta)
             if (cantalmacenada - cantcomprada < 0){
                 sequelize.query('UPDATE product set existence = 0 where id =' + idobjetivo)    
             }
@@ -97,6 +93,8 @@ module.exports = (sequelize) => {
             }
         })
     })
+
+
 
     return SaleDetails
 }

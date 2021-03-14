@@ -12,7 +12,10 @@ const {
 exports.controllerNewSales = async (req, res, next) => {
     try{
         const db = await sequelize.connection()
+
+        
         const data = req.body
+
 
         await db.transaction(async(transaction)=>{
             await newSale(db,transaction,data)
