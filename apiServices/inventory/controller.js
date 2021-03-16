@@ -1,5 +1,4 @@
 const boom = require ('@hapi/boom')
-const { json } = require('sequelize/types')
 const Sequelizelib = require('../../lib/sequelize')
 const seq = new Sequelizelib()
 
@@ -32,9 +31,9 @@ const foundIdPost = (next,data,jsonFinal)=>{
         {
             for (let e = 0; e < jsonFinal.length; e++) 
             {
-                if(jsonFinal[e].id_product = data[i].id_product)
+                if(jsonFinal[e].id_product == data[i].id_product)
                 {
-                    console.log("hola");
+                    console.log(jsonFinal[e].id_product)
                 }
             }
         }
@@ -54,6 +53,7 @@ const Recorrido = async(res,next,id_inventory)=>{
             jsonFinal.push
             (
                 {
+                    "id_product":recorrido[i].dataValues.id,
                     "id_prod_inventory":id_inventory.dataValues.id,
                     "Stock_system":recorrido[i].dataValues.existence,
                     "Price":recorrido[i].dataValues.price
