@@ -14,8 +14,7 @@ exports.createInventory = async (req,res,next) => {
         const db = await seq.connection()
         const data = req.body
         const id_inventory=await insertInventory(db,data)
-        const jsonFinal = await Recorrido(res,next,id_inventory)
-        foundIdPost(next,data,jsonFinal)
+        await Recorrido(res,next,id_inventory,data)
         res.json({            
             mensaje: "Create new inventory"
         })
@@ -24,42 +23,32 @@ exports.createInventory = async (req,res,next) => {
         next(boom.internal(err))
     }
 }
-const foundIdPost = (next,data,jsonFinal)=>{
-    try
-    {
-        for(let i =0 ; i<data.length;i++)
-        {
-            for (let e = 0; e < jsonFinal.length; e++) 
-            {
-                if(jsonFinal[e].id_product == data[i].id_product)
-                {
-                    console.log(jsonFinal[e].id_product)
-                }
-            }
-        }
-    }
-    catch(err){
-        next(boom.internal(err))
-    }
-}
-const Recorrido = async(res,next,id_inventory)=>{
+
+const Recorrido = async(res,next,id_inventory,data)=>{
     try
     {
         const db = await seq.connection()
         const recorrido = await findProducts(db)
         const jsonFinal = []
-        for(let i =0; i<recorrido.length;i++)
+        for(let i =0 ; i<data.length;i++)
         {
-            jsonFinal.push
-            (
+            for (let e = 0; e < recorrido.length; e++) 
+            {
+                if(recorrido[e].dataValues.id == data[i].id_product)
                 {
-                    "id_product":recorrido[i].dataValues.id,
-                    "id_prod_inventory":id_inventory.dataValues.id,
-                    "Stock_system":recorrido[i].dataValues.existence,
-                    "Price":recorrido[i].dataValues.price
+                    jsonFinal.push
+                    (
+                        {
+                            "id_prod_inventory":id_inventory.dataValues.id,
+                            "id_product":data[i].id_product,
+                            "Stock_real":data[i].Stock_real,
+                            "Stock_system":recorrido[e].dataValues.existence
+                        }
+                    )
                 }
-            )
+            }
         }
+        console.log(jsonFinal);
        return jsonFinal
     }
     catch(err)
