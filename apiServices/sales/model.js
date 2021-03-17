@@ -73,11 +73,13 @@ module.exports = (sequelize) => {
         });
     }
 
-    SaleDetails.afterCreate(async(res) => {
+
+    SaleDetails.afterCreate(async(req, res) => {
+        console.log(req.dataValues)
         var idobjetivo = res.dataValues.id_product
         var cantcomprada = res.dataValues.quanty
 
-        const cantalmacen = new Promise((resolve, reject) => {
+        const cantalmacen = new Promise((resolve) => {
             getExistence(idobjetivo).then(function(result){
                 resolve(result.existence)
             })
