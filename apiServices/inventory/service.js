@@ -21,8 +21,7 @@ exports.allJson = async(db,jsonFinal)=>
 {
     return new Promise((resolve,reject)=>{
         InventoryDetail(db)
-        .bulkcreate({
-        })
+        .bulkcreate(jsonFinal)
         .then((resp)=>{
             resolve(resp)
         })

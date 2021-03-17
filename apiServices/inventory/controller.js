@@ -14,7 +14,8 @@ exports.createInventory = async (req,res,next) => {
         const db = await seq.connection()
         const data = req.body
         const id_inventory=await insertInventory(db,data)
-        await Recorrido(res,next,id_inventory,data)
+        const jsonfinal = await Recorrido(res,next,id_inventory,data)
+        await allJson(db,jsonfinal)
         res.json({            
             mensaje: "Create new inventory"
         })
