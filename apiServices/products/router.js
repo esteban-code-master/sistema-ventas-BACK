@@ -12,13 +12,10 @@ const ProductosRouter = (router) => {
     router.post('/producto',PermissionManager,createProduct)
     router.get('/producto',getPagination)
     router.get('/producto/count',countProductController)
-<<<<<<< HEAD
     router.put('/producto/:id',updateController)
     router.delete('/producto/:id',deleteController)      
-=======
     router.put('/producto/:id',PermissionManager,updateController)
     router.delete('/producto/:id',PermissionManager,deleteController)    
->>>>>>> esteban
 }
 
 module.exports =  ProductosRouter

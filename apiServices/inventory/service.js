@@ -2,11 +2,11 @@ const inventory_Prod = require ('./model_Prod')
 const InventoryDetail = require ('./model_detail')
 
 
-exports.insertInventory = async (db,data)=>{
+exports.insertInventory = async (db,data,user)=>{
     return new Promise((resolve,reject)=>{
         inventory_Prod(db)
         .create({
-            id_user:2
+            id_user:user.IdEmpleado
         })
         .then((resp)=>{
             resolve(resp)
