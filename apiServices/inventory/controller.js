@@ -57,7 +57,7 @@ const Recorrido = async(res,next,id_inventory,data)=>{
                 }
             }
         }
-        console.log(jsonFinal);        
+        console.log("hola");        
        return jsonFinal
     }
     catch(err)
