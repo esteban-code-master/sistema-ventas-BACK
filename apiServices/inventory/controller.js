@@ -15,7 +15,7 @@ exports.createInventory = async (req,res,next) => {
         const data = req.body
         const id_inventory=await insertInventory(db,data)
         const jsonfinal = await Recorrido(res,next,id_inventory,data)
-        //await allJson(db,jsonfinal)
+        await allJson(db,jsonfinal)
         res.json({            
             mensaje: "Create new inventory"
         })
@@ -31,19 +31,23 @@ const Recorrido = async(res,next,id_inventory,data)=>{
         const db = await seq.connection()
         const recorrido = await findProducts(db)
         const jsonFinal = []
-        let existence
         for(let i =0 ; i<data.length;i++)
         {
             for (let e = 0; e < recorrido.length; e++) 
             {
-                if(recorrido[e].dataValues.id == data[i].id_product)
-                {
-                    existence = parseInt(recorrido[i].dataValues.existence) - parseInt(data[i].Stock_real)
-                    console.log(existence);
-                    
-                }
+                if(data[i].id_product == recorrido[e].dataValues.id)
+                jsonFinal.push
+                (
+                    {
+                        "id_prod_inventory": id_inventory.id,
+                        "id_product":recorrido[e].dataValues.id,
+                        "Stock_system":recorrido[e].dataValues.existence,
+                        "Stock_real":data[i].Stock_real,
+                    }
+                )
             }
         }
+        console.log(jsonFinal);
        return jsonFinal
     }
     catch(err)
