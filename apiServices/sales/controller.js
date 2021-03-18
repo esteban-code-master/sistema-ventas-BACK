@@ -3,6 +3,7 @@ const Sequelizelib = require('../../lib/sequelize')
 const sequelize = new Sequelizelib()
 const {
     newSale,
+    newSaleDetails,
     eraseSaleDetails,
     updateSaleDetails,
     getAllSales
@@ -13,6 +14,7 @@ exports.controllerNewSales = async (req, res, next) => {
         const db = await sequelize.connection()
         const data = req.body
         let temp = [], temp_datosrestantes = []
+
         temp.push({
             "id_user":data[0].id_user,
             "date":data[0].date,
@@ -21,7 +23,7 @@ exports.controllerNewSales = async (req, res, next) => {
         
         for (let index = 0; index < data.length; index++) {
             temp_datosrestantes.push({
-                "id_sale":"1", //this fake id will be replaced in a hook.
+                "id_sale":"1", //this fake id will be replaced
                 "id_product":data[index].id_product,
                 "quanty":data[index].quanty,
                 "price":data[index].price,
@@ -32,8 +34,14 @@ exports.controllerNewSales = async (req, res, next) => {
         temp_datosrestantes.find(async(property) => {
             if(property.hasOwnProperty('id_sale') && property.hasOwnProperty('id_product') && 
             property.hasOwnProperty('quanty') && property.hasOwnProperty('price') && property.hasOwnProperty('amount')) {
+                
                 await db.transaction(async(transaction)=>{
-                    await newSale(db,transaction,temp,temp_datosrestantes)
+                    const resultado = await newSale(db,transaction,temp)
+                    console.log(transaction)
+                    for (let index = 0; index < temp_datosrestantes.length; index++) {
+                            temp_datosrestantes[index].id_sale = resultado.dataValues.id
+                    }
+                    await newSaleDetails(db,transaction,temp_datosrestantes)     
                 })
             }
             else{

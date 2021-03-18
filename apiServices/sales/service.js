@@ -2,7 +2,7 @@ const Sales = require('./model-sale')
 const SaleDetails = require('./model')
 
 
-exports.newSale = async (db, transaction, temp,temp_datosrestantes) => {
+exports.newSale = async (db, transaction, temp) => {
     return new Promise((resolve, reject) =>{
         Sales(db)
         .create({
@@ -14,9 +14,6 @@ exports.newSale = async (db, transaction, temp,temp_datosrestantes) => {
             transaction
         })
         .then(async(sale)=>{
-
-            console.log(temp_datosrestantes)
-            await this.newSaleDetails(db,temp_datosrestantes)
             resolve(sale)
         })
         .catch((err) => {
@@ -25,10 +22,12 @@ exports.newSale = async (db, transaction, temp,temp_datosrestantes) => {
     })
 }
 
-exports.newSaleDetails = async (db, temp_datosrestantes) => {
+exports.newSaleDetails = async (db, transaction, temp_datosrestantes) => {
     return new Promise((resolve, reject) => {
         SaleDetails(db)
-        .bulkCreate(temp_datosrestantes)
+        .bulkCreate(temp_datosrestantes,{
+            transaction
+        })
         .then((resp) =>{
             resolve(resp)
         })
