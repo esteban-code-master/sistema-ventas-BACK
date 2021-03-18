@@ -1,4 +1,3 @@
-const { db } = require('../../config');
 const Sequelizelib  = require('../../lib/sequelize')
 const {create,getCategory }  = require('./service')
 

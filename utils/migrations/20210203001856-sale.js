@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {  
-    return queryInterface.createTable('sale',{
+    await queryInterface.createTable('sale',{
       id : {
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
@@ -11,20 +11,24 @@ module.exports = {
       date : {
         type : Sequelize.DataTypes.DATE,          
         defaultValue: Sequelize.DataTypes.NOW,
-        allowNull:  true,
+        allowNull:  false,
       },
-      id_session : {
+      id_user : {
         type : Sequelize.DataTypes.INTEGER,
         allowNull:  false,
         references : {
-          model : 'session',
+          model : 'user',
           key : 'id'
         }
       },
+      post : {
+        type : Sequelize.DataTypes.INTEGER,
+        allowNull:  false,
+      }
     })
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('sale')
+    await queryInterface.dropTable('sale')
   }
 };

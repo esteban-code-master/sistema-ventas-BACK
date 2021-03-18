@@ -11,5 +11,8 @@ module.exports = {
     },
     server : {
         port : process.env.PORT
+    },
+    key : {
+        secret : process.env.SECRET_KEY
     }
 }   
