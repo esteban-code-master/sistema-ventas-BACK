@@ -17,17 +17,4 @@ exports.insertInventory = async (db,data)=>{
       })
 }
 
-exports.allJson = async(db,jsonFinal)=>
-{
-    return new Promise((resolve,reject)=>{
-        InventoryDetail(db)
-        .bulkCreate(jsonFinal)
-        .then((resp)=>{
-            resolve(resp)
-        })
-        .catch((err)=>{
-            reject(err)
-        })
-    })
-}
 
