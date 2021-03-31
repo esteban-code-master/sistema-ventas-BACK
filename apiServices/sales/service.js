@@ -139,12 +139,13 @@ exports.getAllSales = async(db, offset, limit) =>{
     return new Promise((resolve, reject) =>{
         SaleDetails(db)
         .findAll({
+            
             attributes : ['id', 'quanty', 'price', 'amount'],
             offset: offset,
             limit: limit,
             include : [
                 {
-                    attributes: ['date', 'post'], //esta tabla tiene otro id
+                    attributes: ['date', 'id_user', 'post'], //esta tabla tiene otro id
                     association: 'sale',
                     required: true
                 },
@@ -153,7 +154,7 @@ exports.getAllSales = async(db, offset, limit) =>{
                     association: 'product',
                     required: true
                 }
-            ],
+            ]
         })
         .then((resp) => {
             resolve(resp)
@@ -162,4 +163,8 @@ exports.getAllSales = async(db, offset, limit) =>{
             reject(err)
         })
     })
+}
+
+exports.getSalesDetails = async(db) => {
+    return new Promise((result, reject) =>{})
 }

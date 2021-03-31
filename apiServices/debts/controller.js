@@ -1,18 +1,23 @@
 const { db } = require('../../config');
+const boom = require('@hapi/boom')
+const { QueryTypes } = require('sequelize');
 const Sequelizelib  = require('../../lib/sequelize')
 const {newDebts, getDebts}  = require('./service')
+const {getSales}  = require('../sales/service')
 
 const sequelize = new Sequelizelib()
 
-exports.createDebts = async (req, res, next) => {
+exports.controllerCreateDebts = async (req, res, next) => {
     try{
-        const db = await sequelize.connection()
+        //const db = await sequelize.connection()
         
     }
     catch(error){
-        netx(boom.internal(error))
+        next(boom.internal(error))
     }
 }
+
+
 
 exports.controllerGetDebts = async(req, res, next) => {
     try {

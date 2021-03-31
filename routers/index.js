@@ -6,6 +6,7 @@ const  LoginRouter = require('../apiServices/Login/router')
 const  cashRouter = require('../apiServices/cash/router')
 const SalesRouter = require('../apiServices/sales/router')
 const RepaymentRouter = require('../apiServices/repayment/router')
+const DebtsRouter = require('../apiServices/debts/router')
 
 const groupRouter = (router) => {
     LoginRouter(router)
@@ -16,6 +17,7 @@ const groupRouter = (router) => {
     cashRouter(router)
     SalesRouter(router)
     RepaymentRouter(router)
+    DebtsRouter(router)
 }
 
 module.exports = groupRouter
