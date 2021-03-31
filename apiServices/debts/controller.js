@@ -1,3 +1,31 @@
 const { db } = require('../../config');
 const Sequelizelib  = require('../../lib/sequelize')
-const {newDebts}  = require('./service')
+const {newDebts, getDebts}  = require('./service')
+
+const sequelize = new Sequelizelib()
+
+exports.createDebts = async (req, res, next) => {
+    try{
+        const db = await sequelize.connection()
+        
+    }
+    catch(error){
+        netx(boom.internal(error))
+    }
+}
+
+exports.controllerGetDebts = async(req, res, next) => {
+    try {
+        const db = await sequelize.connection()
+        const offset = (req.query.offset >= 0)? parseInt(req.query.offset) : 0
+        const limit = (req.query.limit == 10 || req.query.limit == 15 || req.query.limit == 100)? parseInt(req.query.limit) : 10
+        const listDebts = await getDebts(db, offset, limit)
+
+        res.status(200).json({
+            status: res.statusCode,
+            data: listDebts
+        })
+    } catch (error) {
+        next(boom.internal(error))
+    }
+}
