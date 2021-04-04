@@ -2,11 +2,13 @@ const boom = require ('@hapi/boom')
 const Sequelizelib = require('../../lib/sequelize')
 const seq = new Sequelizelib()
 
-const{findProducts}=require('../products/service')
+const{findProducts,nameProduct}=require('../products/service')
 
 const{
     insertInventory,
-    allJson
+    allJson,
+    get,
+    expenses
 }=require('./service')
 
 exports.createInventory = async (req,res,next) => {
@@ -25,7 +27,6 @@ exports.createInventory = async (req,res,next) => {
         next(boom.internal(err))
     }
 }
-
 const Recorrido = async(res,next,id_inventory,data)=>{
     try
     {
@@ -56,9 +57,44 @@ const Recorrido = async(res,next,id_inventory,data)=>{
                 )
                 }
             }
-        }
-        console.log("hola");        
+        }        
+        console.log(jsonFinal);
        return jsonFinal
+    }
+    catch(err)
+    {
+        next(boom.internal(err))
+    }
+}
+
+exports.showInventory = async(req,res,next)=>
+{
+    try
+    {
+        const month = (req.query.month>0)?parseInt( req.query.month):0
+        const day = (req.query.day>0)?parseInt(req.query.day):0
+        const db = await seq.connection()
+        const inventory = await get(db,month,day)
+        res.json({
+            inventory:inventory
+        })
+    }
+    catch(err)
+    {
+        next(boom.internal(err))
+    }
+}
+exports.showExpenses = async(req,res,next)=>
+{
+    try
+    {
+        const month = (req.query.month>0)?parseInt( req.query.month):0
+        const day = (req.query.day>0)?parseInt(req.query.day):0
+        const db = await seq.connection()
+        const expen = await expenses(db,month,day)
+        res.json({
+            inventory:expen
+        })
     }
     catch(err)
     {

@@ -176,3 +176,17 @@ exports.findProducts = async (db)=>{
         })
     })
 }
+exports.nameProduct = async (db)=>{
+    return new Promise((resolve,reject)=>{
+        Products(db)
+        .findAll({
+            attributes:["id","name"]
+        })
+        .then((resp)=>{
+            resolve(resp)
+        })
+        .catch((err)=>{
+            reject(err)
+        })
+    })
+}

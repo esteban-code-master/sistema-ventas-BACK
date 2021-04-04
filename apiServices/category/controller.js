@@ -29,6 +29,7 @@ exports.createCategory = async ( req, res ,next) => {
 exports.consultCategory = async (req,res,next)=>{
 
     try{
+        req.payload
         const db = await sequelize.connection()        
         const getData = await getCategory(db)
         res.json({

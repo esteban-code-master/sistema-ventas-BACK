@@ -12,7 +12,8 @@ const {
 const seq = new Sequelizelib()
 
 exports.createProduct = async (req,res,next) => {
-    try {               
+    try {   
+        req.payload            
         const db = await seq.connection()    
         const data = req.body               
         if(data.code.length == 12){
